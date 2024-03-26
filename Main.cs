@@ -26,7 +26,7 @@ namespace LicensePlateChanger
                     int vehicleID = val.Handle;
                     if (!vehicleLicensePlates.ContainsKey(vehicleID))
                     {
-                        if (Configuration.VehicleClassMapping.ContainsValue(val.ClassType))
+                        if (Configuration.VehicleClassMapping.ContainsValue((VehicleClass)val.ClassType))
                         {
                             if (!VehicleExtensions.IsVehicleExcluded(val))
                             {

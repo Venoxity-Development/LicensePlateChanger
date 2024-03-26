@@ -19,7 +19,7 @@ namespace LicensePlateChanger.Extensions
         /// </summary>
         public static bool IsVehicleExcluded(Vehicle vehicle)
         {
-            string className = Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == vehicle.ClassType).Key;
+            string className = Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == (VehicleClass)vehicle.ClassType).Key;
 
             if (Configuration.ConfigurationData.TryGetValue("vehicleClass", out var vehicleClassTable) && vehicleClassTable is TomlTable)
             {
@@ -56,7 +56,7 @@ namespace LicensePlateChanger.Extensions
 
             if (Enum.TryParse(vehicleClass, out enumValue))
             {
-                if (vehicle.ClassType == enumValue)
+                if ((VehicleClass)vehicle.ClassType == enumValue)
                 {
                     if (currentClassEntry.TryGetValue("allowedVehicles", out var allowedVehicles) && allowedVehicles is TomlArray)
                     {
@@ -89,7 +89,16 @@ namespace LicensePlateChanger.Extensions
         /// </summary>
         private static string GetClassNameForVehicle(Vehicle vehicle)
         {
-            return Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == vehicle.ClassType).Key;
+            List<VehicleClass> allowedClasses = new List<VehicleClass> { VehicleClass.Compacts, VehicleClass.Sedans };
+
+            if (allowedClasses.Contains((VehicleClass)vehicle.ClassType))
+            {
+                return Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == VehicleClass.Cars).Key;
+            } 
+            else
+            {
+                return Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == (VehicleClass)vehicle.ClassType).Key;
+            }
         }
 
         /// <summary>
@@ -173,6 +182,8 @@ namespace LicensePlateChanger.Extensions
                     {
                         if ((bool)isEnabled)
                         {
+                            Console.WriteLine("currentClassEntry: " + Toml.FromModel(currentClassEntry));
+
                             int vehicleID = vehicle.Handle;
                             if (!vehicleLicenseClassName.ContainsKey(vehicleID))
                             {

@@ -33,17 +33,17 @@ namespace LicensePlateChanger
                                 string currentPlate = val.Mods.LicensePlate;
                                 string newPlate = VehicleExtensions.GetPlateFormatForVehicleClass(val);
 
-                                if (!string.IsNullOrEmpty(newPlate) && newPlate != currentPlate)
+                                if (!string.IsNullOrEmpty(newPlate) && newPlate != currentPlate && !IsPlateAlreadyUsed(newPlate))
                                 {
                                     Console.WriteLine($"[LicensePlateChanger]: Applying new license plate format {newPlate} to vehicle {val.DisplayName}.");
-                                   
+
                                     val.Mods.LicensePlate = newPlate;
 
                                     vehicleLicensePlates[vehicleID] = newPlate;
                                 }
                             }
                             else
-                            {                                
+                            {
                                 // Skip processing this vehicle if it's excluded
                                 continue;
                             }
@@ -51,6 +51,18 @@ namespace LicensePlateChanger
                     }
                 }
             }
+        }
+
+        private bool IsPlateAlreadyUsed(string plate)
+        {
+            foreach (var kvp in vehicleLicensePlates)
+            {
+                if (kvp.Value == plate)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

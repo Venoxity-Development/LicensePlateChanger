@@ -40,6 +40,11 @@ namespace LicensePlateChanger
 
             VehicleClassMapping = new Dictionary<string, VehicleClass>();
 
+            string[] classNames = { "Compacts", "Sedans", "SUVs", "Coupes", "Muscle", "SportsClassics", "Sports", "Super", "OffRoad", "Vans" };
+            VehicleClass[] classValues = { VehicleClass.Compacts, VehicleClass.Sedans, 
+                VehicleClass.SUVs, VehicleClass.Coupes, VehicleClass.Muscle, VehicleClass.SportsClassics, 
+                VehicleClass.Sports, VehicleClass.Super, VehicleClass.OffRoad, VehicleClass.Vans };
+
             if (ConfigurationData.TryGetValue("vehicleClass", out var vehicleClassTable) && vehicleClassTable is TomlTable)
             {
                 var vehicleClass = (TomlTable)vehicleClassTable;
@@ -49,6 +54,13 @@ namespace LicensePlateChanger
                     var className = classEntry.Key.ToString();
                     if (Enum.TryParse(className, true, out VehicleClass vehicleClassEnum))
                     {
+                        // VehicleClass.Cars
+                        for (int i = 0; i < classNames.Length; i++)
+                        {
+                            VehicleClassMapping[classNames[i]] = classValues[i];
+                        }
+
+                        // Regular Classes
                         VehicleClassMapping[className] = vehicleClassEnum;
                     }
                     else

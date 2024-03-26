@@ -89,7 +89,9 @@ namespace LicensePlateChanger.Extensions
         /// </summary>
         private static string GetClassNameForVehicle(Vehicle vehicle)
         {
-            List<VehicleClass> allowedClasses = new List<VehicleClass> { VehicleClass.Compacts, VehicleClass.Sedans };
+            List<VehicleClass> allowedClasses = new List<VehicleClass> { VehicleClass.Compacts, VehicleClass.Sedans,
+                VehicleClass.SUVs, VehicleClass.Coupes, VehicleClass.Muscle, VehicleClass.SportsClassics,
+                VehicleClass.Sports, VehicleClass.Super, VehicleClass.OffRoad, VehicleClass.Vans };
 
             if (allowedClasses.Contains((VehicleClass)vehicle.ClassType))
             {

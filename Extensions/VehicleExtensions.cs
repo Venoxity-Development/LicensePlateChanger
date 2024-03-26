@@ -184,8 +184,6 @@ namespace LicensePlateChanger.Extensions
                     {
                         if ((bool)isEnabled)
                         {
-                            Console.WriteLine("currentClassEntry: " + Toml.FromModel(currentClassEntry));
-
                             int vehicleID = vehicle.Handle;
                             if (!vehicleLicenseClassName.ContainsKey(vehicleID))
                             {

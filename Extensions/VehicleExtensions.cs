@@ -131,14 +131,18 @@ namespace LicensePlateChanger.Extensions
                                         {
                                             if (currentClassEntry.TryGetValue("plateType", out var plateType))
                                             {
-                                                int currentPlateType = (int)vehicle.Mods.LicensePlateType;
                                                 string newPlateType = plateType.ToString();
 
-                                                if (currentPlateType != int.Parse(newPlateType))
+                                                if (newPlateType != "-1")
                                                 {
-                                                    Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, int.Parse(plateType.ToString()));
+                                                    int currentPlateType = (int)vehicle.Mods.LicensePlateType;
 
-                                                    vehicleLicenseClassType[vehicleID] = newPlateType;
+                                                    if (currentPlateType != int.Parse(newPlateType))
+                                                    {
+                                                        Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, int.Parse(plateType.ToString()));
+
+                                                        vehicleLicenseClassType[vehicleID] = newPlateType;
+                                                    }
                                                 }
                                             }
                                         }
@@ -189,14 +193,18 @@ namespace LicensePlateChanger.Extensions
                             {
                                 if (currentClassEntry.TryGetValue("plateType", out var plateType))
                                 {
-                                    int currentPlateType = (int)vehicle.Mods.LicensePlateType;
                                     string newPlateType = plateType.ToString();
 
-                                    if (currentPlateType != int.Parse(newPlateType))
+                                    if (newPlateType != "-1")
                                     {
-                                        Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, int.Parse(plateType.ToString()));
+                                        int currentPlateType = (int)vehicle.Mods.LicensePlateType;
 
-                                        vehicleLicenseClassName[vehicleID] = newPlateType;
+                                        if (currentPlateType != int.Parse(newPlateType))
+                                        {
+                                            Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, int.Parse(plateType.ToString()));
+
+                                            vehicleLicenseClassName[vehicleID] = newPlateType;
+                                        }
                                     }
                                 }
                             }

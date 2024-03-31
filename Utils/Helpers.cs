@@ -8,7 +8,7 @@ namespace LicensePlateChanger.Utils
         private static readonly Random Random = new Random(Guid.NewGuid().GetHashCode());
 
         /// <summary>
-        /// Transforms a string by replacing '#' with a random digit and '?' with a random uppercase letter.
+        /// Transforms a string by replacing '#' with a random digit, '?' with a random uppercase letter, and '.' with a random letter or number, with 50% probability of being either.
         /// </summary>
         public static string TransformString(string input)
         {
@@ -25,6 +25,19 @@ namespace LicensePlateChanger.Utils
                 {
                     char randomChar = GetUniqueRandomChar();
                     result.Append(randomChar);
+                }
+                else if (c == '.')
+                {
+                    if (Random.Next(2) == 0) // 50% chance of being either a letter or a number
+                    {
+                        int randomNumber = Random.Next(10);
+                        result.Append(randomNumber);
+                    }
+                    else
+                    {
+                        char randomChar = GetUniqueRandomChar();
+                        result.Append(randomChar);
+                    }
                 }
                 else
                 {

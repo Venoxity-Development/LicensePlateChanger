@@ -143,6 +143,10 @@ namespace LicensePlateChanger.Extensions
 
                                                         vehicleLicenseClassType[vehicleID] = newPlateType;
                                                     }
+                                                } 
+                                                else
+                                                {
+                                                    Console.WriteLine($"[LicensePlateChanger]: Plate type ignored for vehicle ID " + vehicleID + " because it's -1.");
                                                 }
                                             }
                                         }
@@ -205,6 +209,10 @@ namespace LicensePlateChanger.Extensions
 
                                             vehicleLicenseClassName[vehicleID] = newPlateType;
                                         }
+                                    } 
+                                    else
+                                    {
+                                        Console.WriteLine($"[LicensePlateChanger]: Plate type ignored for vehicle ID " + vehicleID + " because it's -1.");
                                     }
                                 }
                             }

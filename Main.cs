@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using GTA;
+using GTA.Native;
 using LicensePlateChanger.Extensions;
 
 namespace LicensePlateChanger
 {
     public class Main : Script
     {
+        #region Fields
         private Dictionary<int, string> vehicleLicensePlates = new Dictionary<int, string>();
+        private static readonly Dictionary<string, DecoratorType> decorators = new Dictionary<string, DecoratorType>()
+        {
+            { "neon_enabled", DecoratorType.Bool },
+        };
+        #endregion
 
         public Main()
         {
+            Decorators.Register(decorators);
             Configuration.LoadConfiguration();
             Tick += OnTick;
         }
@@ -18,8 +26,8 @@ namespace LicensePlateChanger
         private void OnTick(object sender, EventArgs e)
         {
             Wait(100);
-            Vehicle[] allVehicles = World.GetAllVehicles();
-            foreach (Vehicle val in allVehicles)
+            Vehicle[] nearbyVehicles = World.GetNearbyVehicles(Game.Player.Character, 125f);
+            foreach (Vehicle val in nearbyVehicles)
             {
                 if (val.Exists())
                 {

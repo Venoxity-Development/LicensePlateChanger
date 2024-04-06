@@ -18,7 +18,7 @@ namespace LicensePlateChanger
 
         public Main()
         {
-            Decorators.Register(decorators);
+            // Decorators.Register(decorators);
             Configuration.LoadConfiguration();
             Tick += OnTick;
         }

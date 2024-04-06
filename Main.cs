@@ -25,7 +25,7 @@ namespace LicensePlateChanger
 
         private void OnTick(object sender, EventArgs e)
         {
-            Wait(100);
+            Wait(1000);
             Vehicle[] nearbyVehicles = World.GetNearbyVehicles(Game.Player.Character, 125f);
             foreach (Vehicle val in nearbyVehicles)
             {

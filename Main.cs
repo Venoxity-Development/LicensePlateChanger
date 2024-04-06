@@ -13,13 +13,33 @@ namespace LicensePlateChanger
         private static readonly Dictionary<string, DecoratorType> decorators = new Dictionary<string, DecoratorType>()
         {
             { "neon_enabled", DecoratorType.Bool },
+            { "neon_start", DecoratorType.Int },
+            { "neon_known", DecoratorType.Bool },
+            { "neon_effect", DecoratorType.Int },
+            { "neon_base_r", DecoratorType.Int },
+            { "neon_base_g", DecoratorType.Int },
+            { "neon_base_b", DecoratorType.Int },
+            { "neon_last_r", DecoratorType.Int },
+            { "neon_last_g", DecoratorType.Int },
+            { "neon_last_b", DecoratorType.Int }
         };
         #endregion
 
         public Main()
         {
-            // Decorators.Register(decorators);
+            Decorators.Initialize();
+
+            Tick += OnInit;
+  
+        }
+
+        private void OnInit(object sender, EventArgs e)
+        {
+            Decorators.Register(decorators);
+
             Configuration.LoadConfiguration();
+
+            Tick -= OnInit;
             Tick += OnTick;
         }
 

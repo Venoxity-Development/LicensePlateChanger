@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GTA;
+using GTA.Native;
 using LicensePlateChanger.Extensions;
 
 namespace LicensePlateChanger
@@ -11,16 +12,7 @@ namespace LicensePlateChanger
         private Dictionary<int, string> vehicleLicensePlates = new Dictionary<int, string>();
         private static readonly Dictionary<string, DecoratorType> decorators = new Dictionary<string, DecoratorType>()
         {
-            { "neon_enabled", DecoratorType.Bool },
-            { "neon_start", DecoratorType.Int },
-            { "neon_known", DecoratorType.Bool },
-            { "neon_effect", DecoratorType.Int },
-            { "neon_base_r", DecoratorType.Int },
-            { "neon_base_g", DecoratorType.Int },
-            { "neon_base_b", DecoratorType.Int },
-            { "neon_last_r", DecoratorType.Int },
-            { "neon_last_g", DecoratorType.Int },
-            { "neon_last_b", DecoratorType.Int }
+            { "excludeVehicle", DecoratorType.Bool },
         };
         #endregion
 
@@ -45,7 +37,7 @@ namespace LicensePlateChanger
         private void OnTick(object sender, EventArgs e)
         {
             Wait(1000);
-            Vehicle[] nearbyVehicles = World.GetNearbyVehicles(Game.Player.Character, 125f);
+            Vehicle[] nearbyVehicles = World.GetAllVehicles();
             foreach (Vehicle val in nearbyVehicles)
             {
                 if (val.Exists())
@@ -53,26 +45,29 @@ namespace LicensePlateChanger
                     int vehicleID = val.Handle;
                     if (!vehicleLicensePlates.ContainsKey(vehicleID))
                     {
-                        if (Configuration.VehicleClassMapping.ContainsValue((VehicleClass)val.ClassType))
+                        if (!Function.Call<bool>(Hash.DECOR_EXIST_ON, val, "excludeVehicle"))
                         {
-                            if (!VehicleExtensions.IsVehicleExcluded(val))
+                            if (Configuration.VehicleClassMapping.ContainsValue((VehicleClass)val.ClassType))
                             {
-                                string currentPlate = val.Mods.LicensePlate;
-                                string newPlate = VehicleExtensions.GetPlateFormatForVehicleClass(val);
-
-                                if (!string.IsNullOrEmpty(newPlate) && newPlate != currentPlate && !IsPlateAlreadyUsed(newPlate))
+                                if (!VehicleExtensions.IsVehicleExcluded(val) && !Function.Call<bool>(Hash.DECOR_GET_BOOL, val, "excludeVehicle"))
                                 {
-                                    Console.WriteLine($"[LicensePlateChanger]: Applying new license plate format {newPlate} to vehicle {val.DisplayName}.");
+                                    string currentPlate = val.Mods.LicensePlate;
+                                    string newPlate = VehicleExtensions.GetPlateFormatForVehicleClass(val);
 
-                                    val.Mods.LicensePlate = newPlate;
+                                    if (!string.IsNullOrEmpty(newPlate) && newPlate != currentPlate && !IsPlateAlreadyUsed(newPlate))
+                                    {
+                                        Console.WriteLine($"[LicensePlateChanger]: Applying new license plate format {newPlate} to vehicle {val.DisplayName}.");
 
-                                    vehicleLicensePlates[vehicleID] = newPlate;
+                                        val.Mods.LicensePlate = newPlate;
+
+                                        vehicleLicensePlates[vehicleID] = newPlate;
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                // Skip processing this vehicle if it's excluded
-                                continue;
+                                else
+                                {
+                                    // Skip processing this vehicle if it's excluded
+                                    continue;
+                                }
                             }
                         }
                     }

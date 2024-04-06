@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using GTA;
-using GTA.Native;
 using LicensePlateChanger.Extensions;
 
 namespace LicensePlateChanger

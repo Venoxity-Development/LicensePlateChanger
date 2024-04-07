@@ -219,14 +219,17 @@ namespace LicensePlateChanger.Extensions
 
                             if (currentClassEntry.TryGetValue("plateFormat", out var plateFormat))
                             {
-                                // # WIP if has vehicle type then cant use plate format inside vehicle class we want one to override all vehicles if not in list/type
-                                if (string.IsNullOrEmpty(plateFormat.ToString()))
+                                if (plateFormat.ToString() != "XXXXXXXX")
                                 {
-                                    return GetVehicleTypeClassName(vehicle);
-                                }
-                                else
-                                {
-                                    return Helpers.TransformString(plateFormat.ToString());
+                                    // # WIP if has vehicle type then cant use plate format inside vehicle class we want one to override all vehicles if not in list/type
+                                    if (string.IsNullOrEmpty(plateFormat.ToString()))
+                                    {
+                                        return GetVehicleTypeClassName(vehicle);
+                                    }
+                                    else
+                                    {
+                                        return Helpers.TransformString(plateFormat.ToString());
+                                    }
                                 }
                             }
                         }

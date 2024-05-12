@@ -20,7 +20,9 @@ namespace LicensePlateChanger.Utils
 
         static Log()
         {
-            var message = $"LPC - License Plate Changer v{Assembly.GetExecutingAssembly().GetName().Version}";
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            var versionString = $"{version.Major}.{version.Minor}";
+            var message = $"LPC - License Plate Changer v{versionString}";
             message += Environment.NewLine;
             message += "-----------------------------------------------------------";
             message += Environment.NewLine;

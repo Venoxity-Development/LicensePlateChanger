@@ -1,4 +1,5 @@
 ﻿using GTA;
+using LicensePlateChanger.Utils;
 using System;
 
 namespace LicensePlateChanger.Threads
@@ -8,6 +9,8 @@ namespace LicensePlateChanger.Threads
     {
         public VehicleManager()
         {
+            "VehicleManager initialized.".ToLog();
+
             Tick += OnTick;
 
             Interval = 1000;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GTA;
 using GTA.Native;
+using LicensePlateChanger.Utils;
 
 namespace LicensePlateChanger
 {
@@ -62,6 +63,8 @@ namespace LicensePlateChanger
 
             pointer = (byte*)(addr + *(int*)(addr + 8) + 13);
             ready = true;
+
+            "Decorator system initialized.".ToLog(LogLevel.DEBUG);
         }
         /// <summary>
         /// Registers a new decorator.
@@ -75,6 +78,8 @@ namespace LicensePlateChanger
             *pointer = 0;
             Function.Call(Hash.DECOR_REGISTER, decorator, (int)type);
             *pointer = 1;
+
+            $"Registered decorator '{decorator}' of type '{type}'.".ToLog(LogLevel.DEBUG);
         }
         /// <summary>
         /// Registers a set of decorators.
@@ -88,6 +93,7 @@ namespace LicensePlateChanger
             foreach (KeyValuePair<string, DecoratorType> decorator in decorators)
             {
                 Function.Call(Hash.DECOR_REGISTER, decorator.Key, (int)decorator.Value);
+                $"Registered decorator '{decorator.Key}' of type '{decorator.Value}'.".ToLog(LogLevel.DEBUG);
             }
             *pointer = 1;
         }

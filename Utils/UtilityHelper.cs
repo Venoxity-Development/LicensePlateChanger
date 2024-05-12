@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace LicensePlateChanger.Utils
@@ -48,6 +49,19 @@ namespace LicensePlateChanger.Utils
             return result.ToString();
         }
 
+        public static void Shuffle<T>(List<T> list, Random rand)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rand.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
+
         private static char GetUniqueRandomChar()
         {
             char randomChar;
@@ -57,5 +71,6 @@ namespace LicensePlateChanger.Utils
             } while (randomChar == 'I' || randomChar == 'O'); // Exclude 'I' and 'O' to avoid confusion with '1' and '0'
             return randomChar;
         }
+
     }
 }

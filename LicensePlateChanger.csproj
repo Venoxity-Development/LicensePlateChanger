@@ -73,7 +73,6 @@
     <Compile Include="Utils\Configuration.cs" />
     <Compile Include="Utils\ConfigurationHelper.cs" />
     <Compile Include="Decorators.cs" />
-    <Compile Include="Extensions\VehicleExtensions.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums.cs" />

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using GTA;
 using GTA.Native;
-using LicensePlateChanger.Extensions;
 using LicensePlateChanger.Utils;
 
 namespace LicensePlateChanger
@@ -52,25 +51,25 @@ namespace LicensePlateChanger
                         {
                             if (Configuration.VehicleClassMapping.ContainsValue((VehicleClass)val.ClassType))
                             {
-                                if (!VehicleExtensions.IsVehicleExcluded(val) && !Function.Call<bool>(Hash.DECOR_GET_BOOL, val, "excludeVehicle"))
-                                {
-                                    string currentPlate = val.Mods.LicensePlate;
-                                    string newPlate = VehicleExtensions.GetPlateFormatForVehicleClass(val);
+                                //if (!VehicleExtensions.IsVehicleExcluded(val) && !Function.Call<bool>(Hash.DECOR_GET_BOOL, val, "excludeVehicle"))
+                                //{
+                                //    string currentPlate = val.Mods.LicensePlate;
+                                //    string newPlate = VehicleExtensions.GetPlateFormatForVehicleClass(val);
 
-                                    if (!string.IsNullOrEmpty(newPlate) && newPlate != currentPlate && !UtilityHelper.IsPlateAlreadyUsed(newPlate))
-                                    {
-                                        Console.WriteLine($"[LicensePlateChanger]: Applying new license plate format {newPlate} to vehicle {val.DisplayName}.");
+                                //    if (!string.IsNullOrEmpty(newPlate) && newPlate != currentPlate && !UtilityHelper.IsPlateAlreadyUsed(newPlate))
+                                //    {
+                                //        Console.WriteLine($"[LicensePlateChanger]: Applying new license plate format {newPlate} to vehicle {val.DisplayName}.");
 
-                                        val.Mods.LicensePlate = newPlate;
+                                //        val.Mods.LicensePlate = newPlate;
 
-                                        Globals.vehicleLicensePlates[vehicleID] = newPlate;
-                                    }
-                                }
-                                else
-                                {
-                                    // Skip processing this vehicle if it's excluded
-                                    continue;
-                                }
+                                //        Globals.vehicleLicensePlates[vehicleID] = newPlate;
+                                //    }
+                                //}
+                                //else
+                                //{
+                                //    // Skip processing this vehicle if it's excluded
+                                //    continue;
+                                //}
                             }
                         }
                     }

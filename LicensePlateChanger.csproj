@@ -70,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
-    <Compile Include="ConfigurationCore.cs" />
+    <Compile Include="Utils\ConfigurationHelper.cs" />
     <Compile Include="Decorators.cs" />
     <Compile Include="Extensions\VehicleExtensions.cs" />
     <Compile Include="Main.cs" />

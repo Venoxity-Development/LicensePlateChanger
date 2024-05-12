@@ -6,9 +6,9 @@ using Tomlyn.Syntax;
 
 namespace LicensePlateChanger
 {
-    public static class ConfigurationCore
+    public static class ConfigurationHelper
     {
-        public static TomlTable Load(string filePath)
+        public static TomlTable LoadConfigurationFromFile(string filePath)
         {
             try
             {
@@ -21,6 +21,15 @@ namespace LicensePlateChanger
                 Console.WriteLine($"Error loading TOML file: {ex.Message}");
                 return null;
             }
+        }
+
+        public static TomlTable GetTomlTable(string key)
+        {
+            if (Configuration.ConfigurationData.TryGetValue(key, out var value) && value is TomlTable table)
+            {
+                return table;
+            }
+            return null;
         }
     }
 }

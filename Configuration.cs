@@ -16,7 +16,7 @@ namespace LicensePlateChanger
 
             try
             {
-                ConfigurationData = ConfigurationCore.Load("./scripts/LicensePlateChanger/vehicleData.toml");
+                ConfigurationData = ConfigurationHelper.LoadConfigurationFromFile("./scripts/LicensePlateChanger/vehicleData.toml");
 
                 if (ConfigurationData != null)
                 {

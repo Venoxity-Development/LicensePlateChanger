@@ -54,10 +54,6 @@ namespace LicensePlateChanger
             {
                 Utils.Settings.LoadDefaultSettings();
             }
-
-            Configuration.LoadConfiguration();
-
-            Tick -= OnInit;
         }
 
         private void OnAborted(object sender, EventArgs e)

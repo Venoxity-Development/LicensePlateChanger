@@ -1,6 +1,8 @@
 ﻿using GTA;
 using LicensePlateChanger.Utils;
 using System;
+using Tomlyn;
+using Tomlyn.Model;
 
 namespace LicensePlateChanger.Threads
 {
@@ -10,25 +12,28 @@ namespace LicensePlateChanger.Threads
         #region Constructors
         public VehicleManager()
         {
-            "VehicleManager initialized.".ToLog();
-
-            Tick += OnTick;
+            Tick += OnInit;
 
             Interval = 1000;
         }
         #endregion
 
         #region Events
+        private void OnInit(object sender, EventArgs e)
+        {
+            Configuration.LoadConfiguration();
+
+            Tick -= OnInit;
+            Tick += OnTick;
+        }
+
         private void OnTick(object sender, EventArgs e)
         {
-            ProcessNearbyVehicles();
-        }
-        #endregion
+            Console.WriteLine("lol");
 
-        #region Methods
-        public static void ProcessNearbyVehicles()
-        {
-
+            var tomlOut = Toml.FromModel(Configuration.ConfigurationData);
+            var model = Toml.ToModel<Models.VehicleClassTable>(tomlOut);
+            $"{model.isEnabled}".ToLog();
         }
         #endregion
     }

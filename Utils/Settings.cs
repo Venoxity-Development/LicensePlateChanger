@@ -57,7 +57,7 @@ namespace LicensePlateChanger.Utils
 
             EnableLogging = ini.Read("EnableLogging", "ADVANCED");
 
-            $"Loaded EnableLogging setting: {EnableLogging}".ToLog();
+            $"Loaded EnableLogging setting: {EnableLogging}".ToLog(LogLevel.DEBUG);
         }
 
         internal static void LoadDefaultSettings()

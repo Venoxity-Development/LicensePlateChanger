@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Globals.cs" />
+    <Compile Include="Threads\VehicleManager.cs" />
     <Compile Include="Utils\Configuration.cs" />
     <Compile Include="Utils\ConfigurationHelper.cs" />
     <Compile Include="Decorators.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Utils\Log.cs" />
     <Compile Include="Utils\Settings.cs" />
+    <Compile Include="Utils\Updater.cs" />
     <Compile Include="Utils\UtilityHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

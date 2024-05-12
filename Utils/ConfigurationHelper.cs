@@ -22,14 +22,5 @@ namespace LicensePlateChanger.Utils
                 return null;
             }
         }
-
-        public static TomlTable GetTomlTable(string key)
-        {
-            if (Configuration.ConfigurationData.TryGetValue(key, out var value) && value is TomlTable table)
-            {
-                return table;
-            }
-            return null;
-        }
     }
 }

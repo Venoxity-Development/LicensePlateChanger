@@ -16,6 +16,7 @@ namespace LicensePlateChanger
         };
         #endregion
 
+        #region Constructors
         public Main()
         {
             Decorators.Initialize();
@@ -23,7 +24,9 @@ namespace LicensePlateChanger
             Tick += OnInit;
   
         }
+        #endregion
 
+        #region Events
         private void OnInit(object sender, EventArgs e)
         {
             Decorators.Register(decorators);
@@ -74,5 +77,6 @@ namespace LicensePlateChanger
                 }
             }
         }
+        #endregion
     }
 }

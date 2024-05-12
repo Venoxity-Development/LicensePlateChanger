@@ -3,7 +3,7 @@ using System.Text;
 
 namespace LicensePlateChanger.Utils
 {
-    internal static class Helpers
+    internal static class UtilityHelper
     {
         private static readonly Random Random = new Random(Guid.NewGuid().GetHashCode());
 

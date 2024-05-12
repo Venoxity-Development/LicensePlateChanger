@@ -7,6 +7,7 @@ namespace LicensePlateChanger.Threads
     [ScriptAttributes(NoDefaultInstance = true)]
     public class VehicleManager : Script
     {
+        #region Constructors
         public VehicleManager()
         {
             "VehicleManager initialized.".ToLog();
@@ -15,10 +16,20 @@ namespace LicensePlateChanger.Threads
 
             Interval = 1000;
         }
+        #endregion
 
+        #region Events
         private void OnTick(object sender, EventArgs e)
         {
-            Console.WriteLine("Tick 2");
+            ProcessNearbyVehicles();
         }
+        #endregion
+
+        #region Methods
+        public static void ProcessNearbyVehicles()
+        {
+
+        }
+        #endregion
     }
 }

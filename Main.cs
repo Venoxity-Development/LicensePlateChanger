@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using GTA;
 using GTA.Native;
 using LicensePlateChanger.Utils;
@@ -29,6 +30,15 @@ namespace LicensePlateChanger
         private void OnInit(object sender, EventArgs e)
         {
             Decorators.Register(decorators);
+
+            try
+            {
+                Utils.Settings.LoadSettings();
+            }
+            catch (FileNotFoundException)
+            {
+                Utils.Settings.LoadDefaultSettings();
+            }
 
             Configuration.LoadConfiguration();
 

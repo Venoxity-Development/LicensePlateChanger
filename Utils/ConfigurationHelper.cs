@@ -18,7 +18,7 @@ namespace LicensePlateChanger.Utils
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading TOML file: {ex.Message}");
+                $"Error loading TOML file: {ex.Message}".ToLog(LogLevel.ERROR);
                 return null;
             }
         }

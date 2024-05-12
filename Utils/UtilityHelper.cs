@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace LicensePlateChanger.Utils
@@ -18,13 +19,15 @@ namespace LicensePlateChanger.Utils
             {
                 if (c == '#')
                 {
-                    int randomNumber = Random.Next(10); 
+                    int randomNumber = Random.Next(10);
                     result.Append(randomNumber);
+                    $"Replaced '#' with digit: {randomNumber}".ToLog(LogLevel.DEBUG);
                 }
                 else if (c == '?')
                 {
                     char randomChar = GetUniqueRandomChar();
                     result.Append(randomChar);
+                    $"Replaced '?' with character: {randomChar}".ToLog(LogLevel.DEBUG);
                 }
                 else if (c == '.')
                 {
@@ -32,11 +35,13 @@ namespace LicensePlateChanger.Utils
                     {
                         int randomNumber = Random.Next(10);
                         result.Append(randomNumber);
+                        $"Replaced '.' with digit: {randomNumber}".ToLog(LogLevel.DEBUG);
                     }
                     else
                     {
                         char randomChar = GetUniqueRandomChar();
                         result.Append(randomChar);
+                        $"Replaced '.' with character: {randomChar}".ToLog(LogLevel.DEBUG);
                     }
                 }
                 else

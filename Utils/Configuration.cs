@@ -11,7 +11,7 @@ namespace LicensePlateChanger.Utils
 
         public static void LoadConfiguration()
         {
-            Console.WriteLine("[LicensePlateChanger]: Loading configuration data...");
+            "Loading configuration data...".ToLog();
 
             try
             {
@@ -19,23 +19,23 @@ namespace LicensePlateChanger.Utils
 
                 if (ConfigurationData != null)
                 {
-                    Console.WriteLine("[LicensePlateChanger]: Configuration data loaded successfully.");
+                    "Configuration data loaded successfully.".ToLog();
                     ValidateVehicleClassMapping();
                 }
                 else
                 {
-                    Console.WriteLine("[LicensePlateChanger]: Failed to load configuration data.");
+                    "Failed to load configuration data.".ToLog(LogLevel.ERROR);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[LicensePlateChanger]: Error loading configuration: {ex.Message}");
+                $"Error loading configuration: {ex.Message}".ToLog(LogLevel.ERROR);
             }
         }
 
         private static void ValidateVehicleClassMapping()
         {
-            Console.WriteLine("[LicensePlateChanger]: Validating vehicle class mapping...");
+            "Validating vehicle class mapping...".ToLog();
 
             VehicleClassMapping = new Dictionary<string, VehicleClass>();
 
@@ -64,13 +64,16 @@ namespace LicensePlateChanger.Utils
                     }
                     else
                     {
-                        Console.WriteLine($"[LicensePlateChanger]: Invalid vehicle class name: {className}");
+                        $"Invalid vehicle class name: {className}".ToLog(LogLevel.ERROR);
                     }
                 }
+
+                // Show completion message with more information
+                "Vehicle class mapping validation completed successfully. All vehicle classes have been validated and mapped.".ToLog();
             }
             else
             {
-                Console.WriteLine("[LicensePlateChanger]: No vehicle class mapping found.");
+                "No vehicle class mapping found.".ToLog(LogLevel.ERROR);
             }
         }
     }

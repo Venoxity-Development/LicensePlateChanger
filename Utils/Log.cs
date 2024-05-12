@@ -34,6 +34,9 @@ namespace LicensePlateChanger.Utils
 
         public static void Write(string text, LogLevel logLevel = LogLevel.INFO)
         {
+            if (Settings.EnableLogging == "false")
+                return;
+
 #if !DEBUG
              if (logLevel == LogLevel.DEBUG) return;
 #endif

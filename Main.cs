@@ -22,7 +22,7 @@ namespace LicensePlateChanger
             Decorators.Initialize();
 
             Tick += OnInit;
-  
+            Aborted += OnAborted;
         }
         #endregion
 
@@ -76,6 +76,11 @@ namespace LicensePlateChanger
                     }
                 }
             }
+        }
+
+        private void OnAborted(object sender, EventArgs e)
+        {
+            Log.Terminate();
         }
         #endregion
     }

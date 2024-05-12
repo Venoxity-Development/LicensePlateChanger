@@ -43,6 +43,16 @@ namespace LicensePlateChanger.Utils
             writer.WriteLine($"[{DateTime.Now.ToString(CultureInfo.InvariantCulture)}] [{logLevel}] {text}");
             writer.Close();
         }
+
+        internal static void Terminate()
+        {
+            if (!Directory.Exists($"Logs"))
+                Directory.CreateDirectory($"Logs");
+            if (!Directory.Exists($"Logs\\LPC"))
+                Directory.CreateDirectory($"Logs\\LPC");
+
+            File.Copy(Path, $"Logs\\LPC\\LPC_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}.log");
+        }
     }
 
     internal static class LogExtensions

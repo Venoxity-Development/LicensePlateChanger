@@ -79,7 +79,6 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Utils\Log.cs" />
     <Compile Include="Utils\Settings.cs" />
-    <Compile Include="Utils\Updater.cs" />
     <Compile Include="Utils\UtilityHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

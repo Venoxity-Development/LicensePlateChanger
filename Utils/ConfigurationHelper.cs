@@ -4,7 +4,7 @@ using Tomlyn;
 using Tomlyn.Model;
 using Tomlyn.Syntax;
 
-namespace LicensePlateChanger
+namespace LicensePlateChanger.Utils
 {
     public static class ConfigurationHelper
     {

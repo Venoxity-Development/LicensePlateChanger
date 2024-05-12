@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Tomlyn.Model;
 
-namespace LicensePlateChanger
+namespace LicensePlateChanger.Utils
 {
     public class Configuration
     {

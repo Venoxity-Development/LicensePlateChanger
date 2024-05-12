@@ -69,7 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
+    <Compile Include="Utils\Configuration.cs" />
     <Compile Include="Utils\ConfigurationHelper.cs" />
     <Compile Include="Decorators.cs" />
     <Compile Include="Extensions\VehicleExtensions.cs" />

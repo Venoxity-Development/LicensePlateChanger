@@ -59,5 +59,16 @@ namespace LicensePlateChanger.Utils
             return randomChar;
         }
 
+        public static bool IsPlateAlreadyUsed(string plate)
+        {
+            foreach (var kvp in Globals.vehicleLicensePlates)
+            {
+                if (kvp.Value == plate)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

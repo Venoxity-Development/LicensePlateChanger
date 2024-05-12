@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using GTA;
 using GTA.Native;
 using LicensePlateChanger.Extensions;
+using LicensePlateChanger.Utils;
 
 namespace LicensePlateChanger
 {
     public class Main : Script
     {
         #region Fields
-        private Dictionary<int, string> vehicleLicensePlates = new Dictionary<int, string>();
         private static readonly Dictionary<string, DecoratorType> decorators = new Dictionary<string, DecoratorType>()
         {
             { "excludeVehicle", DecoratorType.Bool },
@@ -43,7 +43,7 @@ namespace LicensePlateChanger
                 if (val.Exists())
                 {
                     int vehicleID = val.Handle;
-                    if (!vehicleLicensePlates.ContainsKey(vehicleID))
+                    if (!Globals.vehicleLicensePlates.ContainsKey(vehicleID))
                     {
                         if (!Function.Call<bool>(Hash.DECOR_EXIST_ON, val, "excludeVehicle"))
                         {
@@ -54,13 +54,13 @@ namespace LicensePlateChanger
                                     string currentPlate = val.Mods.LicensePlate;
                                     string newPlate = VehicleExtensions.GetPlateFormatForVehicleClass(val);
 
-                                    if (!string.IsNullOrEmpty(newPlate) && newPlate != currentPlate && !IsPlateAlreadyUsed(newPlate))
+                                    if (!string.IsNullOrEmpty(newPlate) && newPlate != currentPlate && !UtilityHelper.IsPlateAlreadyUsed(newPlate))
                                     {
                                         Console.WriteLine($"[LicensePlateChanger]: Applying new license plate format {newPlate} to vehicle {val.DisplayName}.");
 
                                         val.Mods.LicensePlate = newPlate;
 
-                                        vehicleLicensePlates[vehicleID] = newPlate;
+                                        Globals.vehicleLicensePlates[vehicleID] = newPlate;
                                     }
                                 }
                                 else
@@ -73,18 +73,6 @@ namespace LicensePlateChanger
                     }
                 }
             }
-        }
-
-        private bool IsPlateAlreadyUsed(string plate)
-        {
-            foreach (var kvp in vehicleLicensePlates)
-            {
-                if (kvp.Value == plate)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GTA;
 using LicensePlateChanger.Utils;
 using System;
+using System.Collections.Generic;
 using Tomlyn;
 using Tomlyn.Model;
 
@@ -9,9 +10,16 @@ namespace LicensePlateChanger.Threads
     [ScriptAttributes(NoDefaultInstance = true)]
     public class VehicleManager : Script
     {
+        private static readonly Dictionary<string, DecoratorType> decorators = new Dictionary<string, DecoratorType>()
+        {
+            { "excludeVehicle", DecoratorType.Bool },
+        };
+
         #region Constructors
         public VehicleManager()
         {
+            Decorators.Initialize();
+
             Tick += OnInit;
 
             Interval = 1000;
@@ -21,6 +29,8 @@ namespace LicensePlateChanger.Threads
         #region Events
         private void OnInit(object sender, EventArgs e)
         {
+            Decorators.Register(decorators);
+
             Configuration.LoadConfiguration();
 
             Tick -= OnInit;
@@ -29,11 +39,8 @@ namespace LicensePlateChanger.Threads
 
         private void OnTick(object sender, EventArgs e)
         {
-            Console.WriteLine("lol");
-
             var tomlOut = Toml.FromModel(Configuration.ConfigurationData);
-            var model = Toml.ToModel<Models.VehicleClassTable>(tomlOut);
-            $"{model.isEnabled}".ToLog();
+            Console.WriteLine(tomlOut);
         }
         #endregion
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using GTA;
 using LicensePlateChanger.Threads;
@@ -11,17 +10,11 @@ namespace LicensePlateChanger
     {
         #region Fields
         private static VehicleManager VehicleManager = null;
-        private static readonly Dictionary<string, DecoratorType> decorators = new Dictionary<string, DecoratorType>()
-        {
-            { "excludeVehicle", DecoratorType.Bool },
-        };
         #endregion
 
         #region Constructors
         public Main()
         {
-            Decorators.Initialize();
-
             if (VehicleManager == null)
             {
                 "Instantiating VehicleManager script...".ToLog();
@@ -44,8 +37,6 @@ namespace LicensePlateChanger
         #region Events
         private void OnInit(object sender, EventArgs e)
         {
-            Decorators.Register(decorators);
-
             try
             {
                 Utils.Settings.LoadSettings();

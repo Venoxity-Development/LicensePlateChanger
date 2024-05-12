@@ -51,10 +51,10 @@ namespace LicensePlateChanger.Utils
         {
             if (!Directory.Exists($"Logs"))
                 Directory.CreateDirectory($"Logs");
-            if (!Directory.Exists($"Logs\\LPC"))
-                Directory.CreateDirectory($"Logs\\LPC");
+            if (!Directory.Exists($"Logs\\LicensePlateChanger"))
+                Directory.CreateDirectory($"Logs\\LicensePlateChanger");
 
-            File.Copy(Path, $"Logs\\LPC\\LPC_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}.log");
+            File.Copy(Path, $"Logs\\LicensePlateChanger\\LPC_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}.log");
         }
     }
 

@@ -1,96 +1,4 @@
-﻿using GTA;
-using GTA.UI;
-using LicensePlateChanger.Models;
-using LicensePlateChanger.Utils;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Tomlyn;
+﻿using GTA;using GTA.UI;using LicensePlateChanger.Utils;using System;using System.Collections.Generic;using System.IO;namespace LicensePlateChanger.Threads{    [ScriptAttributes(NoDefaultInstance = true)]    public class VehicleManager : Script    {        #region Fields        private bool processingStarted = false;        private static readonly Dictionary<string, DecoratorType> decorators = new Dictionary<string, DecoratorType>()        {            { "excludeVehicle", DecoratorType.Bool },        };        #endregion        #region Constructors        public VehicleManager()        {            Decorators.Initialize();            Tick += OnInit;            Interval = 1000;        }        #endregion        #region Events        private void OnInit(object sender, EventArgs e)        {            #region Initialization            Decorators.Register(decorators);            Configuration.LoadConfiguration();            switch (Configuration.ValidationState)            {                case VehicleClassMappingValidationState.Success:                    try                    {                        Utils.Settings.LoadSettings();                    }                    catch (FileNotFoundException)                    {                        Utils.Settings.LoadDefaultSettings();                    }                    break;                case VehicleClassMappingValidationState.FailureNoMapping:                case VehicleClassMappingValidationState.FailureInvalidClassName:                    Notification.Show("Failed: No mapping found for vehicle class or invalid class name.");                    "Failed to initialize VehicleManager script.".ToLog();                    Abort();                    break;                default:                    Notification.Show("Unknown validation state encountered.");                    "Failed to initialize VehicleManager script.".ToLog();                    Abort();                    break;            }            #endregion            #region Event handling            Tick -= OnInit;            Tick += OnTick;            #endregion        }        private void OnTick(object sender, EventArgs e)        {            if (!processingStarted)            {                "Vehicle processing started. Processing nearby vehicles...".ToLog();                processingStarted = true;             }            ProcessNearbyVehicles();        }        #endregion        #region Methods        private static void ProcessNearbyVehicles()        {            var model = Configuration.ConfigurationData;            Console.WriteLine($"{model.VehicleClass.Cars.isEnabled}");        }
 
-namespace LicensePlateChanger.Threads
-{
-    [ScriptAttributes(NoDefaultInstance = true)]
-    public class VehicleManager : Script
-    {
-        #region Fields
-        private bool processingStarted = false;
-        private static readonly Dictionary<string, DecoratorType> decorators = new Dictionary<string, DecoratorType>()
-        {
-            { "excludeVehicle", DecoratorType.Bool },
-        };
-        #endregion
 
-        #region Constructors
-        public VehicleManager()
-        {
-            Decorators.Initialize();
-
-            Tick += OnInit;
-
-            Interval = 1000;
-        }
-        #endregion
-
-        #region Events
-        private void OnInit(object sender, EventArgs e)
-        {
-            #region Initialization
-            Decorators.Register(decorators);
-
-            Configuration.LoadConfiguration();
-
-            switch (Configuration.ValidationState)
-            {
-                case VehicleClassMappingValidationState.Success:
-                    try
-                    {
-                        Utils.Settings.LoadSettings();
-                    }
-                    catch (FileNotFoundException)
-                    {
-                        Utils.Settings.LoadDefaultSettings();
-                    }
-                    break;
-                case VehicleClassMappingValidationState.FailureNoMapping:
-                case VehicleClassMappingValidationState.FailureInvalidClassName:
-                    Notification.Show("Failed: No mapping found for vehicle class or invalid class name.");
-                    "Failed to initialize VehicleManager script.".ToLog();
-                    Abort();
-                    break;
-                default:
-                    Notification.Show("Unknown validation state encountered.");
-                    "Failed to initialize VehicleManager script.".ToLog();
-                    Abort();
-                    break;
-            }
-            #endregion
-
-            #region Event handling
-            Tick -= OnInit;
-            Tick += OnTick;
-            #endregion
-        }
-
-        private void OnTick(object sender, EventArgs e)
-        {
-            if (!processingStarted)
-            {
-                "Vehicle processing started. Processing nearby vehicles...".ToLog();
-                processingStarted = true; 
-            }
-
-            ProcessNearbyVehicles();
-        }
-        #endregion
-
-        #region Methods
-        private static void ProcessNearbyVehicles()
-        {
-            var toml = Toml.FromModel(Configuration.ConfigurationData); 
-            var model = Toml.ToModel<VehicleData>(toml);
-            
-            Console.WriteLine($"{model.VehicleClass.Cars.isEnabled}");
-        }
-        #endregion
-    }
-}
+        #endregion    }}

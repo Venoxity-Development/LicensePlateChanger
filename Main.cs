@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using GTA;
 using LicensePlateChanger.Threads;
 using LicensePlateChanger.Utils;
@@ -27,7 +26,6 @@ namespace LicensePlateChanger
                 VehicleManager = null;
             }
 
-            Tick += OnInit;
             Aborted += OnAborted;
 
             Interval = 1000;
@@ -35,20 +33,6 @@ namespace LicensePlateChanger
         #endregion
 
         #region Events
-        private void OnInit(object sender, EventArgs e)
-        {
-            try
-            {
-                Utils.Settings.LoadSettings();
-            }
-            catch (FileNotFoundException)
-            {
-                Utils.Settings.LoadDefaultSettings();
-            }
-
-            Tick -= OnInit;
-        }
-
         private void OnAborted(object sender, EventArgs e)
         {
             Log.Terminate();

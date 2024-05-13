@@ -1,20 +1,24 @@
-﻿using System;
+﻿using LicensePlateChanger.Models;
+using System;
 using System.IO;
 using Tomlyn;
-using Tomlyn.Model;
 using Tomlyn.Syntax;
 
 namespace LicensePlateChanger.Utils
 {
     public static class ConfigurationHelper
     {
-        public static TomlTable LoadConfigurationFromFile(string filePath)
+        public static VehicleData LoadConfigurationFromFile(string filePath)
         {
             try
             {
                 string tomlContent = File.ReadAllText(filePath);
                 DocumentSyntax document = Toml.Parse(tomlContent);
-                return document.ToModel();
+
+                var options = new TomlModelOptions();
+                options.ConvertPropertyName = (string propertyName) => propertyName;
+                
+                return document.ToModel<VehicleData>(options);
             }
             catch (Exception ex)
             {

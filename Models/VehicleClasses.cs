@@ -2,13 +2,13 @@
 {
     public class VehicleClasses
     {
-        public VehicleClass Cars { get; set; }
-        public VehicleClass Motorcycles { get; set; }
-        public VehicleClass Industrial { get; set; }
-        public VehicleClass Utility { get; set; }
-        public VehicleClass Service { get; set; }
-        public VehicleClass Emergency { get; set; }
-        public VehicleClass Military { get; set; }
-        public VehicleClass Commercial { get; set; }
+        public vehicleClass Cars { get; set; }
+        public vehicleClass Motorcycles { get; set; }
+        public vehicleClass Industrial { get; set; }
+        public vehicleClass Utility { get; set; }
+        public vehicleClass Service { get; set; }
+        public vehicleClass Emergency { get; set; }
+        public vehicleClass Military { get; set; }
+        public vehicleClass Commercial { get; set; }
     }
 }

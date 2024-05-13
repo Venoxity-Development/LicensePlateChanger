@@ -25,3 +25,10 @@
     OpenWheel = 22,
     Cars = 23
 }
+
+public enum VehicleClassMappingValidationState
+{
+    Success,
+    FailureNoMapping,
+    FailureInvalidClassName
+}

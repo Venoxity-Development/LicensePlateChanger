@@ -6,9 +6,14 @@ namespace LicensePlateChanger.Utils
 {
     public class Configuration
     {
+        #region Properties
+
         public static TomlTable ConfigurationData { get; private set; }
         public static Dictionary<string, VehicleClass> VehicleClassMapping { get; private set; }
+        public static VehicleClassMappingValidationState ValidationState { get; private set; }
+        #endregion
 
+        #region Methods
         public static void LoadConfiguration()
         {
             "Loading configuration data...".ToLog();
@@ -20,7 +25,7 @@ namespace LicensePlateChanger.Utils
                 if (ConfigurationData != null)
                 {
                     "Configuration data loaded successfully.".ToLog();
-                    ValidateVehicleClassMapping();
+                    ValidationState = ValidateVehicleClassMapping();
                 }
                 else
                 {
@@ -33,7 +38,7 @@ namespace LicensePlateChanger.Utils
             }
         }
 
-        private static void ValidateVehicleClassMapping()
+        private static VehicleClassMappingValidationState ValidateVehicleClassMapping()
         {
             "Validating vehicle class mapping...".ToLog();
 
@@ -65,15 +70,22 @@ namespace LicensePlateChanger.Utils
                     else
                     {
                         $"Invalid vehicle class name: {className}".ToLog(LogLevel.ERROR);
+                        ValidationState = VehicleClassMappingValidationState.FailureInvalidClassName; 
+                        return ValidationState;
                     }
                 }
 
                 "Vehicle class mapping validation completed successfully. All vehicle classes have been validated and mapped.".ToLog();
+                ValidationState = VehicleClassMappingValidationState.Success; 
+                return ValidationState;
             }
             else
             {
                 "No vehicle class mapping found.".ToLog(LogLevel.ERROR);
+                ValidationState = VehicleClassMappingValidationState.FailureNoMapping; 
+                return ValidationState;
             }
         }
+        #endregion
     }
 }

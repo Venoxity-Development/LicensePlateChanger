@@ -58,6 +58,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Globals.cs" />
+    <Compile Include="Models\VehicleData.cs" />
+    <Compile Include="Models\VehicleClasses.cs" />
     <Compile Include="Threads\VehicleManager.cs" />
     <Compile Include="Utils\Configuration.cs" />
     <Compile Include="Utils\ConfigurationHelper.cs" />
@@ -81,5 +84,6 @@
     <Compile Include="Utils\Settings.cs" />
     <Compile Include="Utils\UtilityHelper.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

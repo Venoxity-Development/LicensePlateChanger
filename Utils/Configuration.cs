@@ -68,7 +68,6 @@ namespace LicensePlateChanger.Utils
                     }
                 }
 
-                // Show completion message with more information
                 "Vehicle class mapping validation completed successfully. All vehicle classes have been validated and mapped.".ToLog();
             }
             else

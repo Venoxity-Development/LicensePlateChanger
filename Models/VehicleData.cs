@@ -1,4 +1,6 @@
-﻿namespace LicensePlateChanger.Models
+﻿using System.Collections.Generic;
+
+namespace LicensePlateChanger.Models
 {
     public class vehicleClass
     {
@@ -7,6 +9,6 @@
 
     public class vehicleData
     {
-        public vehicleClasses vehicleClass { get; set; }
+        public Dictionary<string, vehicleClass> vehicleClass { get; set; }
     }
 }

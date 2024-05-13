@@ -8,7 +8,7 @@ namespace LicensePlateChanger.Utils
 {
     public static class ConfigurationHelper
     {
-        public static VehicleData LoadConfigurationFromFile(string filePath)
+        public static vehicleData LoadConfigurationFromFile(string filePath)
         {
             try
             {
@@ -18,7 +18,7 @@ namespace LicensePlateChanger.Utils
                 var options = new TomlModelOptions();
                 options.ConvertPropertyName = (string propertyName) => propertyName;
                 
-                return document.ToModel<VehicleData>(options);
+                return document.ToModel<vehicleData>(options);
             }
             catch (Exception ex)
             {

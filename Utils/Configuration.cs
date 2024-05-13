@@ -7,7 +7,7 @@ namespace LicensePlateChanger.Utils
     public class Configuration
     {
         #region Properties
-        public static VehicleData ConfigurationData { get; private set; }
+        public static vehicleData ConfigurationData { get; private set; }
         public static Dictionary<string, VehicleClass> VehicleClassMapping { get; private set; }
         public static VehicleClassMappingValidationState ValidationState { get; private set; }
         #endregion

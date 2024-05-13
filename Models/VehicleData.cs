@@ -5,8 +5,8 @@
         public bool isEnabled { get; set; }
     }
 
-    public class VehicleData
+    public class vehicleData
     {
-        public VehicleClasses vehicleClass { get; set; }
+        public vehicleClasses vehicleClass { get; set; }
     }
 }

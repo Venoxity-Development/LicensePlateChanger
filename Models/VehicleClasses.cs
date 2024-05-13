@@ -1,6 +1,6 @@
 ﻿namespace LicensePlateChanger.Models
 {
-    public class VehicleClasses
+    public class vehicleClasses
     {
         public vehicleClass Cars { get; set; }
         public vehicleClass Motorcycles { get; set; }

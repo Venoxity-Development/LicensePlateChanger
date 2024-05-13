@@ -71,8 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Globals.cs" />
-    <Compile Include="Models\VehicleData.cs" />
-    <Compile Include="Models\VehicleClasses.cs" />
+    <Compile Include="Models\vehicleData.cs" />
+    <Compile Include="Models\vehicleClasses.cs" />
     <Compile Include="Threads\VehicleManager.cs" />
     <Compile Include="Utils\Configuration.cs" />
     <Compile Include="Utils\ConfigurationHelper.cs" />

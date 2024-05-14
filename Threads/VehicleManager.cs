@@ -84,9 +84,18 @@ namespace LicensePlateChanger.Threads
         #region Methods
         private static void ProcessNearbyVehicles()
         {
-            var model = Configuration.ConfigurationData;
-
-            Console.WriteLine($"{model.vehicleClass.Cars.isEnabled}");
+            Vehicle[] nearbyVehicles = World.GetAllVehicles();
+            foreach (Vehicle val in nearbyVehicles)
+            {
+                if (val.Exists())
+                {
+                    int vehicleID = val.Handle;
+                    if (!Globals.vehicleLicensePlates.ContainsKey(vehicleID))
+                    {
+                        //
+                    }
+                }
+            }
         }
         #endregion
     }

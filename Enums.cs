@@ -26,14 +26,6 @@
     Cars = 23
 }
 
-public static class VehicleClassMappings
-{
-    public static string[] classNames = { "Compacts", "Sedans", "SUVs", "Coupes", "Muscle", "SportsClassics", "Sports", "Super", "OffRoad", "Vans" };
-    public static VehicleClass[] classValues = { VehicleClass.Compacts, VehicleClass.Sedans,
-    VehicleClass.SUVs, VehicleClass.Coupes, VehicleClass.Muscle, VehicleClass.SportsClassics,
-    VehicleClass.Sports, VehicleClass.Super, VehicleClass.OffRoad, VehicleClass.Vans };
-}
-
 public enum VehicleClassMappingValidationState
 {
     Success,

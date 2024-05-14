@@ -48,7 +48,13 @@ namespace LicensePlateChanger.Utils
                 return ValidationState;
             }
 
-            var vehicleClassMapping = new Dictionary<string, VehicleClass>();
+            // exempt i think
+            // var vehicleClassMapping = new Dictionary<string, VehicleClass>();
+
+            string[] classNames = { "Compacts", "Sedans", "SUVs", "Coupes", "Muscle", "SportsClassics", "Sports", "Super", "OffRoad", "Vans" };
+            VehicleClass[] classValues = { VehicleClass.Compacts, VehicleClass.Sedans,
+                                           VehicleClass.SUVs, VehicleClass.Coupes, VehicleClass.Muscle, VehicleClass.SportsClassics,
+                                           VehicleClass.Sports, VehicleClass.Super, VehicleClass.OffRoad, VehicleClass.Vans };
 
             foreach (var classEntry in ConfigurationData.VehicleClassOptions)
             {
@@ -56,13 +62,13 @@ namespace LicensePlateChanger.Utils
                 if (Enum.TryParse(className, true, out VehicleClass vehicleClassEnum))
                 {
                     // VehicleClass.Cars
-                    for (int i = 0; i < VehicleClassMappings.classNames.Length; i++)
+                    for (int i = 0; i < classNames.Length; i++)
                     {
-                        vehicleClassMapping[VehicleClassMappings.classNames[i]] = VehicleClassMappings.classValues[i];
+                        VehicleClassMapping[classNames[i]] = classValues[i];
                     }
 
                     // Regular Classes
-                    vehicleClassMapping[className] = vehicleClassEnum;
+                    VehicleClassMapping[className] = vehicleClassEnum;
                 }
                 else
                 {

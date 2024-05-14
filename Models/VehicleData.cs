@@ -11,6 +11,6 @@ namespace LicensePlateChanger.Models
     public class VehicleData
     {
         [DataMember(Name = "vehicleClass")]
-        public Dictionary<string, VehicleClassOptions> VehicleClassOptions { get; set; }
+        public Dictionary<VehicleClass, VehicleClassOptions> VehicleClassOptions { get; set; }
     }
 }

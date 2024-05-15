@@ -33,7 +33,7 @@ namespace LicensePlateChanger.Utils
             }
             catch (Exception ex)
             {
-                $"Error loading configuration: {ex.Message}".ToLog(LogLevel.ERROR);
+                $"Error loading configuration: {ex}".ToLog(LogLevel.ERROR);
             }
         }
 
@@ -48,8 +48,7 @@ namespace LicensePlateChanger.Utils
                 return ValidationState;
             }
 
-            // exempt i think
-            // var vehicleClassMapping = new Dictionary<string, VehicleClass>();
+            VehicleClassMapping = new Dictionary<string, VehicleClass>();
 
             string[] classNames = { "Compacts", "Sedans", "SUVs", "Coupes", "Muscle", "SportsClassics", "Sports", "Super", "OffRoad", "Vans" };
             VehicleClass[] classValues = { VehicleClass.Compacts, VehicleClass.Sedans,
@@ -59,6 +58,7 @@ namespace LicensePlateChanger.Utils
             foreach (var classEntry in ConfigurationData.VehicleClassOptions)
             {
                 var className = classEntry.Key.ToString();
+
                 if (Enum.TryParse(className, true, out VehicleClass vehicleClassEnum))
                 {
                     // VehicleClass.Cars

@@ -8,6 +8,8 @@ namespace LicensePlateChanger.Extensions
 {
     internal static class VehicleExtensions
     {
+        private static Random random = new Random();
+
         public static bool IsVehicleExcluded(Vehicle vehicle)
         {
             return false;
@@ -31,27 +33,34 @@ namespace LicensePlateChanger.Extensions
 
         public static string GetPlateFormatForVehicleClass(Vehicle vehicle)
         {
-            var vehicleClassOptions = ConfigurationHelper.CheckVehicleConfiguration(vehicle);
-
-            if (vehicleClassOptions != null)
+            try
             {
-                var plateSets = vehicleClassOptions.plateSets;
+                var vehicleClassOptions = ConfigurationHelper.CheckVehicleConfiguration(vehicle);
 
-                foreach (var plateSet in plateSets)
+                if (vehicleClassOptions != null)
                 {
-                    int rd = new Random().Next(100);
-                    if (rd < plateSet.plateProbability)
-                    {
-                        Console.WriteLine($"plateType: {plateSet.plateType}, plateFormat: {plateSet.plateFormat}, plateProbability: {plateSet.plateProbability}");
-                        var transformedPlateFormat = UtilityHelper.TransformString(plateSet.plateFormat);
-                        $"Plate format transformed for vehicle {vehicle.DisplayName}: {transformedPlateFormat}".ToLog(LogLevel.DEBUG);
-                        return transformedPlateFormat;
+                    var plateSets = vehicleClassOptions.plateSets;
 
+                    foreach (var plateSet in plateSets)
+                    {
+                        int rd = random.Next(100);
+                        if (rd < plateSet.plateProbability)
+                        {
+                            Console.WriteLine($"plateType: {plateSet.plateType}, plateFormat: {plateSet.plateFormat}, plateProbability: {plateSet.plateProbability}");
+                            var transformedPlateFormat = UtilityHelper.TransformString(plateSet.plateFormat);
+                            $"Plate format transformed for vehicle {vehicle.DisplayName}: {transformedPlateFormat}".ToLog(LogLevel.DEBUG);
+                            return transformedPlateFormat;
+                        }
                     }
                 }
-            }
 
-            return null; 
+                return null;
+            }
+            catch (Exception ex)
+            {
+                $"{ex}".ToLog(LogLevel.ERROR);
+                return null; 
+            }
         }
     }
 }

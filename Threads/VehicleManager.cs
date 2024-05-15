@@ -89,6 +89,7 @@ namespace LicensePlateChanger.Threads
             Vehicle[] nearbyVehicles = World.GetAllVehicles();
             foreach (Vehicle vehicle in nearbyVehicles)
             {
+                Wait(100);
                 if (vehicle.Exists())
                 {
                     int vehicleID = vehicle.Handle;

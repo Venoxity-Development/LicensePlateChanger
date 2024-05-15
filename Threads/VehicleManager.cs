@@ -2,6 +2,7 @@
 using GTA.Native;
 using GTA.UI;
 using LicensePlateChanger.Extensions;
+using LicensePlateChanger.Models;
 using LicensePlateChanger.Utils;
 using System;
 using System.Collections.Generic;
@@ -104,16 +105,40 @@ namespace LicensePlateChanger.Threads
                                     int currentPlateType = (int)vehicle.Mods.LicensePlateType;
                                     string currentPlateFormat = vehicle.Mods.LicensePlate;
 
-                                    string newPlateFormat = VehicleExtensions.GetPlateFormatForVehicleClass(vehicle);
+                                    PlateSet newPlateSet = VehicleExtensions.GetPlateSetForVehicleClass(vehicle);
 
-                                    if (!string.IsNullOrEmpty(newPlateFormat) && newPlateFormat != currentPlateFormat && !UtilityHelper.IsPlateAlreadyUsed(newPlateFormat))
+                                    if (newPlateSet != null)
                                     {
-                                        Console.WriteLine($"[LicensePlateChanger]: Applying new license plate format {newPlateFormat} to vehicle {vehicle.DisplayName}.");
+                                        string logMessage = "Vehicle's plate ";
 
-                                        vehicle.Mods.LicensePlate = newPlateFormat;
+                                        if (!string.IsNullOrEmpty(newPlateSet.plateType.ToString()) && currentPlateType != newPlateSet.plateType)
+                                        {
+                                            Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, newPlateSet.plateType);
+                                            Globals.vehicleLicenseClassName[vehicleID] = newPlateSet.plateType;
+                                            logMessage += $"type changed to: {newPlateSet.plateType}";
 
-                                        Globals.vehicleLicensePlates[vehicleID] = newPlateFormat;
+                                            if (!string.IsNullOrEmpty(newPlateSet.plateFormat) && newPlateSet.plateFormat != currentPlateFormat
+                                                && !UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat))
+                                            {
+                                                logMessage += ", ";
+                                            }
+                                        }
+
+                                        if (!string.IsNullOrEmpty(newPlateSet.plateFormat) && newPlateSet.plateFormat != currentPlateFormat
+                                            && !UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat))
+                                        {
+                                            var transformedPlateFormat = UtilityHelper.TransformString(newPlateSet.plateFormat);
+                                            vehicle.Mods.LicensePlate = transformedPlateFormat;
+                                            Globals.vehicleLicensePlates[vehicleID] = transformedPlateFormat;
+                                            logMessage += $"format changed to: {transformedPlateFormat}";
+                                        }
+
+                                        if (logMessage != "Vehicle's plate ")
+                                        {
+                                            logMessage.ToLog();
+                                        }
                                     }
+
                                 }
                                 else
                                 {

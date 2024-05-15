@@ -7,6 +7,7 @@ namespace LicensePlateChanger.Models
     {
         public int plateType { get; set; }
         public string plateFormat { get; set; }
+        public string plateProbability { get; set; }
     }
 
     public class VehicleClassOptions

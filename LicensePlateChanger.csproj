@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Extensions\VehicleExtensions.cs" />
     <Compile Include="Globals.cs" />
+    <Compile Include="Models\PlateSet.cs" />
     <Compile Include="Models\VehicleData.cs" />
     <Compile Include="Threads\VehicleManager.cs" />
     <Compile Include="Utils\Configuration.cs" />

@@ -3,13 +3,6 @@ using System.Runtime.Serialization;
 
 namespace LicensePlateChanger.Models
 {
-    public class PlateSet
-    {
-        public int plateType { get; set; }
-        public string plateFormat { get; set; }
-        public int plateProbability { get; set; }
-    }
-
     public class VehicleClassOptions
     {
         public bool isEnabled { get; set; }

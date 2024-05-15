@@ -1,4 +1,5 @@
 ﻿using GTA;
+using LicensePlateChanger.Models;
 using LicensePlateChanger.Utils;
 using System;
 using System.Collections.Generic;
@@ -31,36 +32,25 @@ namespace LicensePlateChanger.Extensions
             }
         }
 
-        public static string GetPlateFormatForVehicleClass(Vehicle vehicle)
+        public static PlateSet GetPlateSetForVehicleClass(Vehicle vehicle)
         {
-            try
+            var vehicleClassOptions = ConfigurationHelper.CheckVehicleConfiguration(vehicle);
+
+            if (vehicleClassOptions != null)
             {
-                var vehicleClassOptions = ConfigurationHelper.CheckVehicleConfiguration(vehicle);
+                var plateSets = vehicleClassOptions.plateSets;
 
-                if (vehicleClassOptions != null)
+                foreach (var plateSet in plateSets)
                 {
-                    var plateSets = vehicleClassOptions.plateSets;
-
-                    foreach (var plateSet in plateSets)
+                    int rd = random.Next(100);
+                    if (rd < plateSet.plateProbability)
                     {
-                        int rd = random.Next(100);
-                        if (rd < plateSet.plateProbability)
-                        {
-                            Console.WriteLine($"plateType: {plateSet.plateType}, plateFormat: {plateSet.plateFormat}, plateProbability: {plateSet.plateProbability}");
-                            var transformedPlateFormat = UtilityHelper.TransformString(plateSet.plateFormat);
-                            $"Plate format transformed for vehicle {vehicle.DisplayName}: {transformedPlateFormat}".ToLog(LogLevel.DEBUG);
-                            return transformedPlateFormat;
-                        }
+                        return plateSet;
                     }
                 }
+            }
 
-                return null;
-            }
-            catch (Exception ex)
-            {
-                $"{ex}".ToLog(LogLevel.ERROR);
-                return null; 
-            }
+            return null;
         }
     }
 }

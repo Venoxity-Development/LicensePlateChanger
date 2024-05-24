@@ -53,14 +53,14 @@ namespace LicensePlateChanger.Extensions
 
                 if (currentPlateType != newPlateSet.plateType)
                 {
-                    Helpers.UpdateLicensePlateType(vehicle, newPlateSet);
+                    UtilityHelper.UpdateLicensePlateType(vehicle, newPlateSet);
                 }
 
                 if (!string.IsNullOrEmpty(newPlateSet.plateFormat) && currentPlateFormat != newPlateSet.plateFormat)
                 {
-                    if (!Helpers.IsPlateAlreadyUsed(newPlateSet.plateFormat))
+                    if (!UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat))
                     {
-                        Helpers.UpdateLicensePlateFormat(vehicle, newPlateSet);
+                        UtilityHelper.UpdateLicensePlateFormat(vehicle, newPlateSet);
                     }
                 }
             }

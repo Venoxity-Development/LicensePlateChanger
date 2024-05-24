@@ -11,7 +11,7 @@ using Tomlyn.Syntax;
 
 namespace LicensePlateChanger.Utils
 {
-    internal static class Helpers
+    internal static class UtilityHelper
     {
         #region Fields
         private static readonly Random Random = new Random(Guid.NewGuid().GetHashCode());

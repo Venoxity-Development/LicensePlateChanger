@@ -73,13 +73,13 @@ namespace LicensePlateChanger.Utils
                 else
                 {
                     $"Invalid vehicle class name: {className}".ToLog(LogLevel.ERROR);
-                    ValidationState = VehicleClassMappingValidationState.FailureInvalidClassName; 
+                    ValidationState = VehicleClassMappingValidationState.FailureInvalidClassName;
                     return ValidationState;
                 }
             }
 
             "Vehicle class mapping validation completed successfully. All vehicle classes have been validated and mapped.".ToLog();
-            ValidationState = VehicleClassMappingValidationState.Success; 
+            ValidationState = VehicleClassMappingValidationState.Success;
             return ValidationState;
         }
         #endregion

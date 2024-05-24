@@ -76,26 +76,22 @@ namespace LicensePlateChanger.Extensions
         /// </summary>
         public static void UpdateVehicleLicensePlateInfo(Vehicle vehicle)
         {
-            int currentPlateType = (int)vehicle.Mods.LicensePlateType;
-            string currentPlateFormat = vehicle.Mods.LicensePlate;
-
             PlateSet newPlateSet = GetPlateSetForVehicleClass(vehicle);
 
-            if (newPlateSet == null) return;
-
-            bool plateTypeChanged = !string.IsNullOrEmpty(newPlateSet.plateType.ToString()) && currentPlateType != newPlateSet.plateType;
-            bool plateFormatChanged = !string.IsNullOrEmpty(newPlateSet.plateFormat)
-                                       && newPlateSet.plateFormat != currentPlateFormat
-                                       && !UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat);
-
-            if (plateTypeChanged)
+            if (newPlateSet != null)
             {
-                UpdateLicensePlateType(vehicle, newPlateSet);
-            }
+                int currentPlateType = (int)vehicle.Mods.LicensePlateType;
+                string currentPlateFormat = vehicle.Mods.LicensePlate;
 
-            if (plateFormatChanged)
-            {
-                UpdateLicensePlateFormat(vehicle, newPlateSet);
+                if (currentPlateType != newPlateSet.plateType)
+                {
+                    UpdateLicensePlateType(vehicle, newPlateSet);
+                }
+
+                if (!string.IsNullOrEmpty(newPlateSet.plateFormat) && newPlateSet.plateFormat != currentPlateFormat && !UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat))
+                {
+                    UpdateLicensePlateFormat(vehicle, newPlateSet);
+                }
             }
         }
 

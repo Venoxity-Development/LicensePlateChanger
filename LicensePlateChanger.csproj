@@ -76,14 +76,13 @@
     <Compile Include="Models\VehicleData.cs" />
     <Compile Include="Threads\VehicleManager.cs" />
     <Compile Include="Handlers\ConfigHandler.cs" />
-    <Compile Include="Utils\ConfigurationHelper.cs" />
     <Compile Include="Decorators.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Utils\Log.cs" />
     <Compile Include="Utils\Settings.cs" />
-    <Compile Include="Utils\UtilityHelper.cs" />
+    <Compile Include="Utils\Helpers.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

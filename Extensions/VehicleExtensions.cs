@@ -1,5 +1,4 @@
 ﻿using GTA;
-using GTA.Native;
 using LicensePlateChanger.Models;
 using LicensePlateChanger.Utils;
 using System;
@@ -54,36 +53,17 @@ namespace LicensePlateChanger.Extensions
 
                 if (currentPlateType != newPlateSet.plateType)
                 {
-                    UpdateLicensePlateType(vehicle, newPlateSet);
+                    UtilityHelper.UpdateLicensePlateType(vehicle, newPlateSet);
                 }
 
                 if (!string.IsNullOrEmpty(newPlateSet.plateFormat) && currentPlateFormat != newPlateSet.plateFormat)
                 {
                     if (!UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat))
                     {
-                        UpdateLicensePlateFormat(vehicle, newPlateSet);
+                        UtilityHelper.UpdateLicensePlateFormat(vehicle, newPlateSet);
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Updates vehicle's license plate type.
-        /// </summary>
-        private static void UpdateLicensePlateType(Vehicle vehicle, PlateSet newPlateSet)
-        {
-            Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, newPlateSet.plateType);
-            Globals.vehicleLicenseClassName[vehicle.Handle] = newPlateSet.plateType;
-        }
-
-        /// <summary>
-        /// Updates vehicle's license plate format.
-        /// </summary>
-        private static void UpdateLicensePlateFormat(Vehicle vehicle, PlateSet newPlateSet)
-        {
-            string transformedPlateFormat = UtilityHelper.TransformString(newPlateSet.plateFormat);
-            vehicle.Mods.LicensePlate = transformedPlateFormat;
-            Globals.vehicleLicensePlates[vehicle.Handle] = transformedPlateFormat;
         }
         #endregion
     }

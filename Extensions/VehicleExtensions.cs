@@ -61,36 +61,34 @@ namespace LicensePlateChanger.Extensions
 
             PlateSet newPlateSet = GetPlateSetForVehicleClass(vehicle);
 
-            if (newPlateSet != null)
+            if (newPlateSet == null) return;
+
+            string logMessage = "Vehicle's plate ";
+
+            bool plateTypeChanged = !string.IsNullOrEmpty(newPlateSet.plateType.ToString()) && currentPlateType != newPlateSet.plateType;
+            bool plateFormatChanged = !string.IsNullOrEmpty(newPlateSet.plateFormat)
+                                       && newPlateSet.plateFormat != currentPlateFormat
+                                       && !UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat);
+
+            if (plateTypeChanged)
             {
-                string logMessage = "Vehicle's plate ";
+                Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, newPlateSet.plateType);
+                Globals.vehicleLicenseClassName[vehicle.Handle] = newPlateSet.plateType;
+                logMessage += $"type changed to: {newPlateSet.plateType}";
+            }
 
-                if (!string.IsNullOrEmpty(newPlateSet.plateType.ToString()) && currentPlateType != newPlateSet.plateType)
-                {
-                    Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, newPlateSet.plateType);
-                    Globals.vehicleLicenseClassName[vehicle.Handle] = newPlateSet.plateType;
-                    logMessage += $"type changed to: {newPlateSet.plateType}";
+            if (plateFormatChanged)
+            {
+                if (plateTypeChanged) logMessage += ", ";
+                string transformedPlateFormat = UtilityHelper.TransformString(newPlateSet.plateFormat);
+                vehicle.Mods.LicensePlate = transformedPlateFormat;
+                Globals.vehicleLicensePlates[vehicle.Handle] = transformedPlateFormat;
+                logMessage += $"format changed to: {transformedPlateFormat}";
+            }
 
-                    if (!string.IsNullOrEmpty(newPlateSet.plateFormat) && newPlateSet.plateFormat != currentPlateFormat
-                        && !UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat))
-                    {
-                        logMessage += ", ";
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(newPlateSet.plateFormat) && newPlateSet.plateFormat != currentPlateFormat
-                    && !UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat))
-                {
-                    var transformedPlateFormat = UtilityHelper.TransformString(newPlateSet.plateFormat);
-                    vehicle.Mods.LicensePlate = transformedPlateFormat;
-                    Globals.vehicleLicensePlates[vehicle.Handle] = transformedPlateFormat;
-                    logMessage += $"format changed to: {transformedPlateFormat}";
-                }
-
-                if (logMessage != "Vehicle's plate ")
-                {
-                    logMessage.ToLog();
-                }
+            if (logMessage != "Vehicle's plate ")
+            {
+                logMessage.ToLog();
             }
         }
     }

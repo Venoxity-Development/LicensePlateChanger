@@ -75,7 +75,7 @@
     <Compile Include="Models\PlateSet.cs" />
     <Compile Include="Models\VehicleData.cs" />
     <Compile Include="Threads\VehicleManager.cs" />
-    <Compile Include="Utils\Configuration.cs" />
+    <Compile Include="Handlers\ConfigHandler.cs" />
     <Compile Include="Utils\ConfigurationHelper.cs" />
     <Compile Include="Decorators.cs" />
     <Compile Include="Main.cs" />

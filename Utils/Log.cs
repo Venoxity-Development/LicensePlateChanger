@@ -5,19 +5,34 @@ using System.Reflection;
 
 namespace LicensePlateChanger.Utils
 {
+    /// <summary>
+    /// Defines different levels of logging.
+    /// </summary>
     internal enum LogLevel
     {
         DEBUG, // Only prints if DEBUG flag is enabled
         INFO, // Prints to log file only
-        DEVMODE, // Prints to console aswell
-        ERROR, // Prints to console aswell
-        FATAL // Prints to console aswell
+        DEVMODE, // Prints to console as well
+        ERROR, // Prints to console as well
+        FATAL // Prints to console as well
     }
 
+    /// <summary>
+    /// Handles logging operations for the License Plate Changer application.
+    /// </summary>
     internal static class Log
     {
+        #region Fields
+
         private const string Path = "Scripts\\LicensePlateChanger.log";
 
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes the log file with application version information.
+        /// </summary>
         static Log()
         {
             var version = Assembly.GetExecutingAssembly().GetName().Version;
@@ -32,13 +47,22 @@ namespace LicensePlateChanger.Utils
             writer.Close();
         }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Writes the provided text to the log file with the specified log level.
+        /// </summary>
+        /// <param name="text">The text to log.</param>
+        /// <param name="logLevel">The log level.</param>
         public static void Write(string text, LogLevel logLevel = LogLevel.INFO)
         {
             if (Settings.EnableLogging == "false")
                 return;
 
 #if !DEBUG
-             if (logLevel == LogLevel.DEBUG) return;
+            if (logLevel == LogLevel.DEBUG) return;
 #endif
             if (logLevel > LogLevel.INFO) Console.WriteLine($"[{logLevel}] {text}");
 
@@ -47,6 +71,9 @@ namespace LicensePlateChanger.Utils
             writer.Close();
         }
 
+        /// <summary>
+        /// Finalizes logging operations by creating log directories and copying the log file.
+        /// </summary>
         internal static void Terminate()
         {
             if (!Directory.Exists($"Logs"))
@@ -56,10 +83,20 @@ namespace LicensePlateChanger.Utils
 
             File.Copy(Path, $"Logs\\LicensePlateChanger\\LPC_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}.log");
         }
+
+        #endregion
     }
 
+    /// <summary>
+    /// Provides extension methods for logging.
+    /// </summary>
     internal static class LogExtensions
     {
+        /// <summary>
+        /// Writes the specified message to the log file with the given log level.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        /// <param name="logLevel">The log level.</param>
         public static void ToLog(this string message, LogLevel logLevel = LogLevel.INFO) =>
             Log.Write(message, logLevel);
     }

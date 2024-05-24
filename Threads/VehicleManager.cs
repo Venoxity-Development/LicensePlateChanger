@@ -99,9 +99,9 @@ namespace LicensePlateChanger.Threads
                         {
                             if (Configuration.VehicleClassMapping.ContainsValue((VehicleClass)vehicle.ClassType))
                             {
-                                if (!VehicleExtensions.IsVehicleExcluded(vehicle))
+                                if (!ConfigurationHelper.IsVehicleExcluded(vehicle))
                                 {
-                                    VehicleExtensions.UpdateVehiclePlateInfo(vehicle);
+                                    VehicleExtensions.UpdateVehicleLicensePlateInfo(vehicle);
                                 }
                                 else
                                 {

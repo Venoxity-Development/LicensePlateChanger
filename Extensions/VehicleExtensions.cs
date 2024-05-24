@@ -8,15 +8,27 @@ using System.Linq;
 
 namespace LicensePlateChanger.Extensions
 {
+    /// <summary>
+    /// Provides extensions for managing vehicle-related functionalities.
+    /// </summary>
     internal static class VehicleExtensions
     {
+        #region Fields
         private static Random random = new Random();
+        #endregion
 
-        public static bool IsVehicleExcluded(Vehicle vehicle)
+        #region Vehicle Information Retrieval
+        /// <summary>
+        /// Determines if a vehicle is excluded from license plate changing.
+        /// </summary>
+        public static bool IsVehicleExcludedFromPlateChanging(Vehicle vehicle)
         {
             return false;
         }
 
+        /// <summary>
+        /// Retrieves the class name for a given vehicle.
+        /// </summary>
         public static string GetClassNameForVehicle(Vehicle vehicle)
         {
             List<VehicleClass> allowedClasses = new List<VehicleClass> { VehicleClass.Compacts, VehicleClass.Sedans,
@@ -32,7 +44,12 @@ namespace LicensePlateChanger.Extensions
                 return Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == (VehicleClass)vehicle.ClassType).Key;
             }
         }
+        #endregion
 
+        #region License Plate Management
+        /// <summary>
+        /// Retrieves plate set based on vehicle class configuration.
+        /// </summary>
         public static PlateSet GetPlateSetForVehicleClass(Vehicle vehicle)
         {
             var vehicleClassOptions = ConfigurationHelper.CheckVehicleConfiguration(vehicle);
@@ -54,7 +71,10 @@ namespace LicensePlateChanger.Extensions
             return null;
         }
 
-        public static void UpdateVehiclePlateInfo(Vehicle vehicle)
+        /// <summary>
+        /// Updates vehicle's license plate information based on plate set.
+        /// </summary>
+        public static void UpdateVehicleLicensePlateInfo(Vehicle vehicle)
         {
             int currentPlateType = (int)vehicle.Mods.LicensePlateType;
             string currentPlateFormat = vehicle.Mods.LicensePlate;
@@ -63,8 +83,6 @@ namespace LicensePlateChanger.Extensions
 
             if (newPlateSet == null) return;
 
-            string logMessage = "Vehicle's plate ";
-
             bool plateTypeChanged = !string.IsNullOrEmpty(newPlateSet.plateType.ToString()) && currentPlateType != newPlateSet.plateType;
             bool plateFormatChanged = !string.IsNullOrEmpty(newPlateSet.plateFormat)
                                        && newPlateSet.plateFormat != currentPlateFormat
@@ -72,24 +90,33 @@ namespace LicensePlateChanger.Extensions
 
             if (plateTypeChanged)
             {
-                Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, newPlateSet.plateType);
-                Globals.vehicleLicenseClassName[vehicle.Handle] = newPlateSet.plateType;
-                logMessage += $"type changed to: {newPlateSet.plateType}";
+                UpdateLicensePlateType(vehicle, newPlateSet);
             }
 
             if (plateFormatChanged)
             {
-                if (plateTypeChanged) logMessage += ", ";
-                string transformedPlateFormat = UtilityHelper.TransformString(newPlateSet.plateFormat);
-                vehicle.Mods.LicensePlate = transformedPlateFormat;
-                Globals.vehicleLicensePlates[vehicle.Handle] = transformedPlateFormat;
-                logMessage += $"format changed to: {transformedPlateFormat}";
-            }
-
-            if (logMessage != "Vehicle's plate ")
-            {
-                logMessage.ToLog();
+                UpdateLicensePlateFormat(vehicle, newPlateSet);
             }
         }
+
+        /// <summary>
+        /// Updates vehicle's license plate type.
+        /// </summary>
+        private static void UpdateLicensePlateType(Vehicle vehicle, PlateSet newPlateSet)
+        {
+            Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, newPlateSet.plateType);
+            Globals.vehicleLicenseClassName[vehicle.Handle] = newPlateSet.plateType;
+        }
+
+        /// <summary>
+        /// Updates vehicle's license plate format.
+        /// </summary>
+        private static void UpdateLicensePlateFormat(Vehicle vehicle, PlateSet newPlateSet)
+        {
+            string transformedPlateFormat = UtilityHelper.TransformString(newPlateSet.plateFormat);
+            vehicle.Mods.LicensePlate = transformedPlateFormat;
+            Globals.vehicleLicensePlates[vehicle.Handle] = transformedPlateFormat;
+        }
+        #endregion
     }
 }

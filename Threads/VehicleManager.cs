@@ -97,7 +97,7 @@ namespace LicensePlateChanger.Threads
                     {
                         if (!Function.Call<bool>(Hash.DECOR_EXIST_ON, vehicle, "excludeVehicle"))
                         {
-                            if (Configuration.ConfigurationData.VehicleClassOptions.ContainsKey((VehicleClass)vehicle.ClassType))
+                            if (Configuration.VehicleClassMapping.ContainsValue((VehicleClass)vehicle.ClassType))
                             {
                                 if (!VehicleExtensions.IsVehicleExcluded(vehicle))
                                 {

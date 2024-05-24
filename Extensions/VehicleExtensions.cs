@@ -3,8 +3,6 @@ using GTA.Native;
 using LicensePlateChanger.Models;
 using LicensePlateChanger.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace LicensePlateChanger.Extensions
 {
@@ -15,35 +13,6 @@ namespace LicensePlateChanger.Extensions
     {
         #region Fields
         private static Random random = new Random();
-        #endregion
-
-        #region Vehicle Information Retrieval
-        /// <summary>
-        /// Determines if a vehicle is excluded from license plate changing.
-        /// </summary>
-        public static bool IsVehicleExcludedFromPlateChanging(Vehicle vehicle)
-        {
-            return false;
-        }
-
-        /// <summary>
-        /// Retrieves the class name for a given vehicle.
-        /// </summary>
-        public static string GetClassNameForVehicle(Vehicle vehicle)
-        {
-            List<VehicleClass> allowedClasses = new List<VehicleClass> { VehicleClass.Compacts, VehicleClass.Sedans,
-                VehicleClass.SUVs, VehicleClass.Coupes, VehicleClass.Muscle, VehicleClass.SportsClassics,
-                VehicleClass.Sports, VehicleClass.Super, VehicleClass.OffRoad, VehicleClass.Vans };
-
-            if (allowedClasses.Contains((VehicleClass)vehicle.ClassType))
-            {
-                return Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == VehicleClass.Cars).Key;
-            }
-            else
-            {
-                return Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == (VehicleClass)vehicle.ClassType).Key;
-            }
-        }
         #endregion
 
         #region License Plate Management

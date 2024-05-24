@@ -1,8 +1,9 @@
 ﻿using GTA;
-using LicensePlateChanger.Extensions;
 using LicensePlateChanger.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Tomlyn;
 using Tomlyn.Syntax;
 
@@ -31,7 +32,7 @@ namespace LicensePlateChanger.Utils
 
         public static VehicleClassOptions CheckVehicleConfiguration(Vehicle vehicle)
         {
-            if (Enum.TryParse(VehicleExtensions.GetClassNameForVehicle(vehicle), out VehicleClass targetClass))
+            if (Enum.TryParse(GetClassNameForVehicle(vehicle), out VehicleClass targetClass))
             {
                 if (Configuration.ConfigurationData.VehicleClassOptions.TryGetValue(targetClass, out var classOptions))
                 {
@@ -52,5 +53,28 @@ namespace LicensePlateChanger.Utils
 
             return null;
         }
+
+
+        public static bool IsVehicleExcludedFromPlateChanging(Vehicle vehicle)
+        {
+            return false;
+        }
+
+        public static string GetClassNameForVehicle(Vehicle vehicle)
+        {
+            List<VehicleClass> allowedClasses = new List<VehicleClass> { VehicleClass.Compacts, VehicleClass.Sedans,
+                VehicleClass.SUVs, VehicleClass.Coupes, VehicleClass.Muscle, VehicleClass.SportsClassics,
+                VehicleClass.Sports, VehicleClass.Super, VehicleClass.OffRoad, VehicleClass.Vans };
+
+            if (allowedClasses.Contains((VehicleClass)vehicle.ClassType))
+            {
+                return Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == VehicleClass.Cars).Key;
+            }
+            else
+            {
+                return Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == (VehicleClass)vehicle.ClassType).Key;
+            }
+        }
+
     }
 }

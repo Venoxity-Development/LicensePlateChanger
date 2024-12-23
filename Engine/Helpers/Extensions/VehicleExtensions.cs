@@ -1,5 +1,7 @@
 ﻿using GTA;
+using GTA.Native;
 using LicensePlateChanger.Engine.Data;
+using LicensePlateChanger.Engine.InternalSystems;
 using System;
 
 namespace LicensePlateChanger.Engine.Helpers.Extensions
@@ -65,6 +67,47 @@ namespace LicensePlateChanger.Engine.Helpers.Extensions
                 }
             }
         }
+        #endregion
+
+        #region Vehicle Processing
+
+        /// <summary>
+        /// Processes a vehicle to check if it passes all required checks.
+        /// </summary>
+        /// <param name="vehicle">The vehicle to process</param>
+        /// <returns>True if the vehicle passes all checks, otherwise false</returns>
+        public static bool Process(this Vehicle vehicle)
+        {
+            int vehicleID = vehicle.Handle;
+
+            if (!vehicle.Exists())
+            {
+                return false;
+            }
+
+            if (Globals.vehicleLicensePlates.ContainsKey(vehicleID))
+            {
+                return false;
+            }
+
+            if (Function.Call<bool>(Hash.DECOR_EXIST_ON, vehicle, "excludeVehicle"))
+            {
+                return false;
+            }
+
+            if (!ConfigurationManager.VehicleClassMapping.ContainsValue((VehicleClass)vehicle.ClassType))
+            {
+                return false;
+            }
+
+            if (ConfigurationHelper.IsVehicleExcluded(vehicle))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
     }
 }

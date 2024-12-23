@@ -1,4 +1,5 @@
 ﻿using GTA;
+using GTA.Math;
 using GTA.Native;
 using LicensePlateChanger.Engine.Data;
 using LicensePlateChanger.Engine.InternalSystems;
@@ -182,6 +183,19 @@ namespace LicensePlateChanger.Engine.Helpers
         #endregion
 
         #region Vehicle Exclusion
+
+        /// <summary>
+        /// Filters vehicles based on proximity to a given position.
+        /// </summary>
+        /// <param name="playerPosition">The player's position to filter by</param>
+        /// <param name="radius">The radius to check for vehicles</param>
+        /// <returns>Array of filtered vehicles</returns>
+        public static Vehicle[] GetFilteredVehicles(Vector3 playerPosition, float radius)
+        {
+            return World.GetAllVehicles().Where(vehicle =>
+                vehicle.Exists() &&
+                vehicle.Position.DistanceTo(playerPosition) < radius).ToArray();
+        }
 
         /// <summary>
         /// Checks if a vehicle is excluded from certain operations.

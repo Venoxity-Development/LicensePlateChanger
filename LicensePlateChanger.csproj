@@ -70,19 +70,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\VehicleExtensions.cs" />
+    <Compile Include="Engine\Data\PlateSet.cs" />
+    <Compile Include="Engine\Data\VehicleData.cs" />
+    <Compile Include="Engine\Helpers\Extensions\VehicleExtensions.cs" />
     <Compile Include="Globals.cs" />
-    <Compile Include="Models\PlateSet.cs" />
-    <Compile Include="Models\VehicleData.cs" />
-    <Compile Include="Threads\VehicleManager.cs" />
-    <Compile Include="Handlers\ConfigHandler.cs" />
+    <Compile Include="Modules\VehicleManager.cs" />
+    <Compile Include="Engine\InternalSystems\ConfigHandler.cs" />
     <Compile Include="Decorators.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Utils\Log.cs" />
-    <Compile Include="Utils\Settings.cs" />
-    <Compile Include="Utils\Helpers.cs" />
+    <Compile Include="Engine\InternalSystems\Log.cs" />
+    <Compile Include="Engine\InternalSystems\Settings.cs" />
+    <Compile Include="Engine\Helpers\Helper.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

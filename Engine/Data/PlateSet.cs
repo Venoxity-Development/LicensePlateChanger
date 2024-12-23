@@ -1,4 +1,4 @@
-﻿namespace LicensePlateChanger.Models
+﻿namespace LicensePlateChanger.Engine.Data
 {
     public class PlateSet
     {

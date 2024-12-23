@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace LicensePlateChanger.Models
+namespace LicensePlateChanger.Engine.Data
 {
     public class VehicleClassOptions
     {

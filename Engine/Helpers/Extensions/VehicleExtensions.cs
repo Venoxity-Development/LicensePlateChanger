@@ -1,9 +1,8 @@
 ﻿using GTA;
-using LicensePlateChanger.Models;
-using LicensePlateChanger.Utils;
+using LicensePlateChanger.Engine.Data;
 using System;
 
-namespace LicensePlateChanger.Extensions
+namespace LicensePlateChanger.Engine.Helpers.Extensions
 {
     /// <summary>
     /// Provides extensions for managing vehicle-related functionalities.
@@ -31,6 +30,7 @@ namespace LicensePlateChanger.Extensions
                     int rd = random.Next(100);
                     if (rd < plateSet.plateProbability)
                     {
+                        Console.WriteLine($"plateType: {plateSet.plateType}, plateFormat: {plateSet.plateFormat}, plateProbability: {plateSet.plateProbability}");
                         return plateSet;
                     }
                 }

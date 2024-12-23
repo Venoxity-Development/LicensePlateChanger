@@ -1,7 +1,7 @@
 ﻿using System;
 using GTA;
-using LicensePlateChanger.Threads;
-using LicensePlateChanger.Utils;
+using LicensePlateChanger.Modules;
+using LicensePlateChanger.Engine.InternalSystems;
 
 namespace LicensePlateChanger
 {

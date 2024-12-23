@@ -1,8 +1,9 @@
-﻿using LicensePlateChanger.Models;
+﻿using LicensePlateChanger.Engine.Helpers;
+using LicensePlateChanger.Engine.Data;
 using System;
 using System.Collections.Generic;
 
-namespace LicensePlateChanger.Utils
+namespace LicensePlateChanger.Engine.InternalSystems
 {
     public class Configuration
     {

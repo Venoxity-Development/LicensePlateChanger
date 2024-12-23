@@ -3,7 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-namespace LicensePlateChanger.Utils
+namespace LicensePlateChanger.Engine.InternalSystems
 {
     /// <summary>
     /// Defines different levels of logging.

@@ -1,13 +1,15 @@
 ﻿using GTA;
 using GTA.Native;
 using GTA.UI;
-using LicensePlateChanger.Extensions;
-using LicensePlateChanger.Utils;
+using LicensePlateChanger.Engine.Helpers.Extensions;
+using LicensePlateChanger.Engine.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using LicensePlateChanger.Engine.InternalSystems;
 
-namespace LicensePlateChanger.Threads
+namespace LicensePlateChanger.Modules
 {
     [ScriptAttributes(NoDefaultInstance = true)]
     public class VehicleManager : Script
@@ -44,11 +46,11 @@ namespace LicensePlateChanger.Threads
                 case VehicleClassMappingValidationState.Success:
                     try
                     {
-                        Utils.Settings.LoadSettings();
+                        Engine.InternalSystems.Settings.LoadSettings();
                     }
                     catch (FileNotFoundException)
                     {
-                        Utils.Settings.LoadDefaultSettings();
+                        Engine.InternalSystems.Settings.LoadDefaultSettings();
                     }
                     break;
                 case VehicleClassMappingValidationState.FailureNoMapping:
@@ -73,6 +75,8 @@ namespace LicensePlateChanger.Threads
 
         private void OnTick(object sender, EventArgs e)
         {
+            "OnTick event triggered.".ToLog();
+
             if (!processingStarted)
             {
                 "Vehicle processing started. Processing nearby vehicles...".ToLog();
@@ -86,33 +90,58 @@ namespace LicensePlateChanger.Threads
         #region Methods
         private static void ProcessNearbyVehicles()
         {
+            "Processing nearby vehicles...".ToLog();
+
+            // Get all vehicles in the world
             Vehicle[] nearbyVehicles = World.GetAllVehicles();
+
             foreach (Vehicle vehicle in nearbyVehicles)
             {
-                Wait(100);
-                if (vehicle.Exists())
+                Wait(100); // Retain the delay for each vehicle
+
+                // Skip vehicles that do not exist
+                if (!vehicle.Exists())
                 {
-                    int vehicleID = vehicle.Handle;
-                    if (!Globals.vehicleLicensePlates.ContainsKey(vehicleID))
-                    {
-                        if (!Function.Call<bool>(Hash.DECOR_EXIST_ON, vehicle, "excludeVehicle"))
-                        {
-                            if (Configuration.VehicleClassMapping.ContainsValue((VehicleClass)vehicle.ClassType))
-                            {
-                                if (!ConfigurationHelper.IsVehicleExcluded(vehicle))
-                                {
-                                    VehicleExtensions.UpdateVehicleLicensePlateInfo(vehicle);
-                                }
-                                else
-                                {
-                                    // Skip processing this vehicle if it's excluded
-                                    continue;
-                                }
-                            }
-                        }
-                    }
+                    "Skipped: Vehicle does not exist.".ToLog();
+                    continue;
                 }
+
+                int vehicleID = vehicle.Handle;
+
+                // Skip if the vehicle is already in the license plate dictionary
+                if (Globals.vehicleLicensePlates.ContainsKey(vehicleID))
+                {
+                    $"Skipped: Vehicle ID {vehicleID} is already in the license plate dictionary.".ToLog();
+                    continue;
+                }
+
+                // Skip if the vehicle has the 'excludeVehicle' decorator
+                if (Function.Call<bool>(Hash.DECOR_EXIST_ON, vehicle, "excludeVehicle"))
+                {
+                    $"Skipped: Vehicle ID {vehicleID} has 'excludeVehicle' decorator.".ToLog();
+                    continue;
+                }
+
+                // Skip if the vehicle class type is not mapped
+                if (!Configuration.VehicleClassMapping.ContainsValue((VehicleClass)vehicle.ClassType))
+                {
+                    $"Skipped: Vehicle ID {vehicleID} has an unmapped class type.".ToLog();
+                    continue;
+                }
+
+                // Skip if the vehicle is excluded by configuration
+                if (ConfigurationHelper.IsVehicleExcluded(vehicle))
+                {
+                    $"Skipped: Vehicle ID {vehicleID} is excluded by configuration.".ToLog();
+                    continue;
+                }
+
+                // Update the vehicle's license plate information
+                $"Updating license plate info for Vehicle ID {vehicleID}.".ToLog();
+                VehicleExtensions.UpdateVehicleLicensePlateInfo(vehicle);
             }
+
+            "Finished processing nearby vehicles.".ToLog();
         }
         #endregion
     }

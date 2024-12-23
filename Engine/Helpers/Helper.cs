@@ -1,6 +1,7 @@
 ﻿using GTA;
 using GTA.Native;
-using LicensePlateChanger.Models;
+using LicensePlateChanger.Engine.Data;
+using LicensePlateChanger.Engine.InternalSystems;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Text;
 using Tomlyn;
 using Tomlyn.Syntax;
 
-namespace LicensePlateChanger.Utils
+namespace LicensePlateChanger.Engine.Helpers
 {
     internal static class UtilityHelper
     {

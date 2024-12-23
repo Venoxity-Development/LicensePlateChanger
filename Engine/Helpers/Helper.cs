@@ -104,7 +104,7 @@ namespace LicensePlateChanger.Engine.Helpers
         public static void UpdateLicensePlateFormat(Vehicle vehicle, PlateSet newPlateSet)
         {
             if (newPlateSet.plateFormat == "XXXXXXXX") return;
-            
+
             string transformedPlateFormat = TransformString(newPlateSet.plateFormat);
             vehicle.Mods.LicensePlate = transformedPlateFormat;
             Globals.vehicleLicensePlates[vehicle.Handle] = transformedPlateFormat;

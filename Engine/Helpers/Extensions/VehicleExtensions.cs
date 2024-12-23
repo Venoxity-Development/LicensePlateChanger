@@ -21,20 +21,17 @@ namespace LicensePlateChanger.Engine.Helpers.Extensions
         /// </summary>
         public static PlateSet GetPlateSetForVehicleClass(Vehicle vehicle)
         {
-            var vehicleClassOptions = ConfigurationHelper.CheckVehicleConfiguration(vehicle);
+            var vehicleClassOptions = ConfigurationHelper.CheckVehicleClassConfiguration(vehicle);
+            if (vehicleClassOptions == null) return null;
 
-            if (vehicleClassOptions != null)
+            var vehicleTypeOptions = ConfigurationHelper.CheckVehicleTypeConfiguration(vehicle);
+            var plateSets = vehicleTypeOptions?.plateSets ?? vehicleClassOptions.plateSets;
+
+            foreach (var plateSet in plateSets)
             {
-                var plateSets = vehicleClassOptions.plateSets;
-
-                foreach (var plateSet in plateSets)
+                if (random.Next(100) < plateSet.plateProbability)
                 {
-                    int rd = random.Next(100);
-                    if (rd < plateSet.plateProbability)
-                    {
-                        Console.WriteLine($"plateType: {plateSet.plateType}, plateFormat: {plateSet.plateFormat}, plateProbability: {plateSet.plateProbability}");
-                        return plateSet;
-                    }
+                    return plateSet;
                 }
             }
 

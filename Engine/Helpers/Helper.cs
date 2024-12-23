@@ -145,27 +145,46 @@ namespace LicensePlateChanger.Engine.Helpers
         #region Vehicle Configuration Checking
 
         /// <summary>
-        /// Checks if a vehicle meets certain configuration criteria.
+        /// Checks if a vehicle meets vehicle class configuration criteria.
         /// </summary>
         /// <param name="vehicle">The vehicle to check.</param>
-        /// <returns>The class options for the vehicle if it meets criteria; otherwise, null.</returns>
-        public static VehicleClassOptions CheckVehicleConfiguration(Vehicle vehicle)
+        /// <returns>The vehicle class options for the vehicle if it meets criteria; otherwise, null.</returns>
+        public static VehicleClassOptions CheckVehicleClassConfiguration(Vehicle vehicle)
         {
-            if (Enum.TryParse(GetClassNameForVehicle(vehicle), out VehicleClass targetClass))
+            if (Enum.TryParse(GetClassNameForVehicle(vehicle), out VehicleClass targetClass) &&
+                ConfigurationManager.ConfigurationData.VehicleClassOptions.TryGetValue(targetClass, out var classOptions) &&
+                classOptions.isEnabled)
             {
-                if (ConfigurationManager.ConfigurationData.VehicleClassOptions.TryGetValue(targetClass, out var classOptions))
+                if (!Globals.vehicleLicensePlates.ContainsKey(vehicle.Handle))
                 {
-                    if (classOptions.isEnabled)
+                    return classOptions;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Checks if a vehicle meets the vehicle type configuration criteria.
+        /// </summary>
+        /// <param name="vehicle">The vehicle to check.</param>
+        /// <returns>The vehicle type options if it meets criteria; otherwise, null.</returns>
+        public static VehicleTypeOptions CheckVehicleTypeConfiguration(Vehicle vehicle)
+        {
+            string vehicleClassName = GetClassNameForVehicle(vehicle) + "Vehicle";
+
+            foreach (var vehicleTypeOption in ConfigurationManager.ConfigurationData.VehicleTypeOptions.Values)
+            {
+                if (vehicleTypeOption.className == vehicleClassName && vehicleTypeOption.isTypeEnabled)
+                {
+                    foreach (var allowedVehicle in vehicleTypeOption.allowedVehicles)
                     {
-                        int vehicleID = vehicle.Handle;
-                        if (!Globals.vehicleLicensePlates.ContainsKey(vehicleID))
+                        int allowedVehicleHash = Function.Call<int>(Hash.GET_HASH_KEY, allowedVehicle.ToString());
+
+                        if (allowedVehicleHash == vehicle.Model.Hash && !Globals.vehicleLicensePlates.ContainsKey(vehicle.Handle))
                         {
-                            return classOptions;
+                            return vehicleTypeOption;
                         }
-                    }
-                    else
-                    {
-                        return null;
                     }
                 }
             }

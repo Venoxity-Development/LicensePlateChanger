@@ -73,8 +73,6 @@ namespace LicensePlateChanger.Modules
 
         private void OnTick(object sender, EventArgs e)
         {
-            "OnTick event triggered.".ToLog();
-
             if (!processingStarted)
             {
                 "Vehicle processing started. Processing nearby vehicles...".ToLog();

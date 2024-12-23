@@ -12,6 +12,7 @@ namespace LicensePlateChanger.Engine.Data
     public class VehicleTypeOptions
     {
         public bool isTypeEnabled { get; set; }
+        public string className { get; set; }
         public List<PlateSet> plateSets { get; set; }
         public List<string> allowedVehicles { get; set; }
     }

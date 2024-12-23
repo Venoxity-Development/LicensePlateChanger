@@ -159,7 +159,7 @@ namespace LicensePlateChanger.Engine.Helpers
         {
             if (Enum.TryParse(GetClassNameForVehicle(vehicle), out VehicleClass targetClass))
             {
-                if (Configuration.ConfigurationData.VehicleClassOptions.TryGetValue(targetClass, out var classOptions))
+                if (ConfigurationManager.ConfigurationData.VehicleClassOptions.TryGetValue(targetClass, out var classOptions))
                 {
                     if (classOptions.isEnabled)
                     {
@@ -210,11 +210,11 @@ namespace LicensePlateChanger.Engine.Helpers
 
             if (allowedClasses.Contains((VehicleClass)vehicle.ClassType))
             {
-                return Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == VehicleClass.Cars).Key;
+                return ConfigurationManager.VehicleClassMapping.FirstOrDefault(x => x.Value == VehicleClass.Cars).Key;
             }
             else
             {
-                return Configuration.VehicleClassMapping.FirstOrDefault(x => x.Value == (VehicleClass)vehicle.ClassType).Key;
+                return ConfigurationManager.VehicleClassMapping.FirstOrDefault(x => x.Value == (VehicleClass)vehicle.ClassType).Key;
             }
         }
 

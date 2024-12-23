@@ -31,36 +31,25 @@ namespace LicensePlateChanger.Engine.Helpers
 
             foreach (char c in input)
             {
-                if (c == '#')
-                {
-                    int randomNumber = Random.Next(10);
-                    result.Append(randomNumber);
-                }
-                else if (c == '?')
-                {
-                    char randomChar = GetUniqueRandomChar();
-                    result.Append(randomChar);
-                }
-                else if (c == '.')
-                {
-                    if (Random.Next(2) == 0) // 50% chance of being either a letter or a number
-                    {
-                        int randomNumber = Random.Next(10);
-                        result.Append(randomNumber);
-                    }
-                    else
-                    {
-                        char randomChar = GetUniqueRandomChar();
-                        result.Append(randomChar);
-                    }
-                }
-                else
-                {
-                    result.Append(c);
-                }
+                result.Append(TransformCharacter(c));
             }
 
             return result.ToString();
+        }
+
+        private static char TransformCharacter(char c)
+        {
+            switch (c)
+            {
+                case '#':
+                    return (char)('0' + Random.Next(10));  // Generate a random number directly
+                case '?':
+                    return GetUniqueRandomChar();  // Generate a random char (custom logic)
+                case '.':
+                    return Random.Next(2) == 0 ? (char)('0' + Random.Next(10)) : GetUniqueRandomChar();  // Random dot behavior (50% number or char)
+                default:
+                    return c;  // Return the character as is if no transformation is needed
+            }
         }
 
         private static char GetUniqueRandomChar()

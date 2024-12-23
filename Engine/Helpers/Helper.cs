@@ -90,6 +90,8 @@ namespace LicensePlateChanger.Engine.Helpers
         /// <param name="newPlateSet">The new plate set containing the updated plate type</param>
         public static void UpdateLicensePlateType(Vehicle vehicle, PlateSet newPlateSet)
         {
+            if (newPlateSet.plateType == -1) return;
+
             Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, newPlateSet.plateType);
             Globals.vehicleLicenseClassName[vehicle.Handle] = newPlateSet.plateType;
         }

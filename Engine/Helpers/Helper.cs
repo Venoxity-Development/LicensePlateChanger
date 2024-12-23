@@ -215,12 +215,16 @@ namespace LicensePlateChanger.Engine.Helpers
             {
                 return ConfigurationManager.VehicleClassMapping.FirstOrDefault(x => x.Value == VehicleClass.Cars).Key;
             }
+            else if (vehicle.IsTrailer)
+            {
+                return ConfigurationManager.VehicleClassMapping.FirstOrDefault(x => x.Value == VehicleClass.Trailers).Key;
+            }
             else
             {
                 return ConfigurationManager.VehicleClassMapping.FirstOrDefault(x => x.Value == (VehicleClass)vehicle.ClassType).Key;
             }
         }
-
+        
         #endregion
     }
 }

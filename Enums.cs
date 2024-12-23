@@ -23,7 +23,8 @@
     Commercial = 20,
     Trains = 21,
     OpenWheel = 22,
-    Cars = 23
+    Cars = 23,
+    Trailers = 24
 }
 
 public enum VehicleClassMappingValidationState

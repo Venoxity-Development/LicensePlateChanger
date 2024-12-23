@@ -173,17 +173,25 @@ namespace LicensePlateChanger.Engine.Helpers
         {
             string vehicleClassName = GetClassNameForVehicle(vehicle) + "Vehicle";
 
+            if (ConfigurationManager.ConfigurationData?.VehicleTypeOptions == null)
+            {
+                return null;
+            }
+
             foreach (var vehicleTypeOption in ConfigurationManager.ConfigurationData.VehicleTypeOptions.Values)
             {
-                if (vehicleTypeOption.className == vehicleClassName && vehicleTypeOption.isTypeEnabled)
+                if (vehicleTypeOption != null && vehicleTypeOption.className == vehicleClassName && vehicleTypeOption.isTypeEnabled)
                 {
-                    foreach (var allowedVehicle in vehicleTypeOption.allowedVehicles)
+                    if (vehicleTypeOption.allowedVehicles != null)
                     {
-                        int allowedVehicleHash = Function.Call<int>(Hash.GET_HASH_KEY, allowedVehicle.ToString());
-
-                        if (allowedVehicleHash == vehicle.Model.Hash && !Globals.vehicleLicensePlates.ContainsKey(vehicle.Handle))
+                        foreach (var allowedVehicle in vehicleTypeOption.allowedVehicles)
                         {
-                            return vehicleTypeOption;
+                            int allowedVehicleHash = Function.Call<int>(Hash.GET_HASH_KEY, allowedVehicle.ToString());
+
+                            if (allowedVehicleHash == vehicle.Model.Hash && !Globals.vehicleLicensePlates.ContainsKey(vehicle.Handle))
+                            {
+                                return vehicleTypeOption;
+                            }
                         }
                     }
                 }

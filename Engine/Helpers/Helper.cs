@@ -76,10 +76,10 @@ namespace LicensePlateChanger.Engine.Helpers
 
         #region Plate Checking
         /// <summary>
-        /// Checks if a given license plate is already in use.
+        /// Checks if the specified license plate is already in use by any vehicle.
         /// </summary>
         /// <param name="plate">The license plate to check</param>
-        /// <returns>True if the plate is already in use, otherwise false</returns>
+        /// <returns>True if the plate is already in use by any vehicle, otherwise false</returns>
         public static bool IsPlateAlreadyUsed(string plate)
         {
             foreach (var kvp in Globals.vehicleLicensePlates)

@@ -47,23 +47,21 @@ namespace LicensePlateChanger.Engine.Helpers.Extensions
         public static void UpdateVehicleLicensePlateInfo(Vehicle vehicle)
         {
             PlateSet newPlateSet = GetPlateSetForVehicleClass(vehicle);
+            if (newPlateSet == null) return;
 
-            if (newPlateSet != null)
+            int currentPlateType = (int)vehicle.Mods.LicensePlateType;
+            string currentPlateFormat = vehicle.Mods.LicensePlate;
+
+            if (currentPlateType != newPlateSet.plateType)
             {
-                int currentPlateType = (int)vehicle.Mods.LicensePlateType;
-                string currentPlateFormat = vehicle.Mods.LicensePlate;
+                UtilityHelper.UpdateLicensePlateType(vehicle, newPlateSet);
+            }
 
-                if (currentPlateType != newPlateSet.plateType)
+            if (!string.IsNullOrEmpty(newPlateSet.plateFormat) && currentPlateFormat != newPlateSet.plateFormat)
+            {
+                if (!UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat))
                 {
-                    UtilityHelper.UpdateLicensePlateType(vehicle, newPlateSet);
-                }
-
-                if (!string.IsNullOrEmpty(newPlateSet.plateFormat) && currentPlateFormat != newPlateSet.plateFormat)
-                {
-                    if (!UtilityHelper.IsPlateAlreadyUsed(newPlateSet.plateFormat))
-                    {
-                        UtilityHelper.UpdateLicensePlateFormat(vehicle, newPlateSet);
-                    }
+                    UtilityHelper.UpdateLicensePlateFormat(vehicle, newPlateSet);
                 }
             }
         }
@@ -85,7 +83,7 @@ namespace LicensePlateChanger.Engine.Helpers.Extensions
                 return false;
             }
 
-            if (Globals.vehicleLicensePlates.ContainsKey(vehicleID))
+            if (Globals.vehicleLicenseClassName.ContainsKey(vehicleID) && Globals.vehicleLicensePlates.ContainsKey(vehicleID))
             {
                 return false;
             }

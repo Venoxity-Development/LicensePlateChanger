@@ -1,7 +1,6 @@
-﻿using System;
-using GTA;
-using LicensePlateChanger.Modules;
-using LicensePlateChanger.Engine.InternalSystems;
+﻿using LicensePlateChanger.Modules;
+using Common.API;
+using static LicensePlateChanger.Engine.Helpers.UtilityHelper;
 
 namespace LicensePlateChanger
 {
@@ -35,7 +34,7 @@ namespace LicensePlateChanger
         #region Events
         private void OnAborted(object sender, EventArgs e)
         {
-            Log.Terminate();
+            Logger.Terminate();
         }
         #endregion
     }

@@ -1,10 +1,4 @@
-﻿using GTA;
-using GTA.Native;
-using LicensePlateChanger.Engine.Data;
-using LicensePlateChanger.Engine.InternalSystems;
-using System;
-
-namespace LicensePlateChanger.Engine.Helpers.Extensions
+﻿namespace LicensePlateChanger.Engine.Helpers.Extensions
 {
     /// <summary>
     /// Provides extensions for managing vehicle-related functionalities.
@@ -27,9 +21,21 @@ namespace LicensePlateChanger.Engine.Helpers.Extensions
             var vehicleTypeOptions = ConfigurationHelper.CheckVehicleTypeConfiguration(vehicle);
             var plateSets = vehicleTypeOptions?.plateSets ?? vehicleClassOptions.plateSets;
 
+            if (plateSets == null || plateSets.Count == 0) return null;
+
+            int totalProbability = plateSets.Sum(ps => ps.plateProbability);
+            if (totalProbability != 100)
+            {
+                throw new InvalidOperationException("Plate probabilities must sum up to 100.");
+            }
+
+            int randomValue = random.Next(100);
+            int cumulativeProbability = 0;
+
             foreach (var plateSet in plateSets)
             {
-                if (random.Next(100) < plateSet.plateProbability)
+                cumulativeProbability += plateSet.plateProbability;
+                if (randomValue < cumulativeProbability)
                 {
                     return plateSet;
                 }

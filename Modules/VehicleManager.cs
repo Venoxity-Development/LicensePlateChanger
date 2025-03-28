@@ -1,11 +1,5 @@
-﻿using GTA;
-using GTA.UI;
+﻿using GTA.UI;
 using LicensePlateChanger.Engine.Helpers.Extensions;
-using LicensePlateChanger.Engine.Helpers;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using LicensePlateChanger.Engine.InternalSystems;
 
 namespace LicensePlateChanger.Modules
 {

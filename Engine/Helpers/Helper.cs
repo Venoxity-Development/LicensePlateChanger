@@ -1,21 +1,14 @@
-﻿using GTA;
-using GTA.Math;
-using GTA.Native;
-using LicensePlateChanger.Engine.Data;
-using LicensePlateChanger.Engine.InternalSystems;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using GTA.Math;
 using Tomlyn;
 using Tomlyn.Syntax;
+using Common.API;
 
 namespace LicensePlateChanger.Engine.Helpers
 {
     internal static class UtilityHelper
     {
         #region Fields
+        internal static readonly Log Logger = new Log();
         private static readonly Random Random = new Random(Guid.NewGuid().GetHashCode());
         #endregion
 

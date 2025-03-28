@@ -1,8 +1,4 @@
-﻿using LicensePlateChanger.Modules;
-using Common.API;
-using static LicensePlateChanger.Engine.Helpers.UtilityHelper;
-
-namespace LicensePlateChanger
+﻿namespace LicensePlateChanger
 {
     public class Main : Script
     {

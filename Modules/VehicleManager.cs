@@ -1,7 +1,4 @@
-﻿using GTA.UI;
-using LicensePlateChanger.Engine.Helpers.Extensions;
-
-namespace LicensePlateChanger.Modules
+﻿namespace LicensePlateChanger.Modules
 {
     [ScriptAttributes(NoDefaultInstance = true)]
     public class VehicleManager : Script

@@ -64,7 +64,7 @@ namespace LicensePlateChanger.Engine.Helpers
         /// <returns>True if the plate is already in use by any vehicle, otherwise false</returns>
         public static bool IsPlateAlreadyUsed(string plate)
         {
-            foreach (var kvp in Globals.vehicleLicensePlates)
+            foreach (var kvp in vehicleLicensePlates)
             {
                 if (kvp.Value == plate)
                 {
@@ -86,7 +86,7 @@ namespace LicensePlateChanger.Engine.Helpers
             if (newPlateSet.plateType == -1) return;
 
             Function.Call<int>(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, vehicle, newPlateSet.plateType);
-            Globals.vehicleLicenseClassName[vehicle.Handle] = newPlateSet.plateType;
+            vehicleLicenseClassName[vehicle.Handle] = newPlateSet.plateType;
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace LicensePlateChanger.Engine.Helpers
 
             string transformedPlateFormat = TransformString(newPlateSet.plateFormat);
             vehicle.Mods.LicensePlate = transformedPlateFormat;
-            Globals.vehicleLicensePlates[vehicle.Handle] = transformedPlateFormat;
+            vehicleLicensePlates[vehicle.Handle] = transformedPlateFormat;
         }
         #endregion
     }
@@ -128,7 +128,7 @@ namespace LicensePlateChanger.Engine.Helpers
             }
             catch (Exception ex)
             {
-                $"Error loading TOML file: {ex.Message}".ToLog(LogLevel.ERROR);
+                // $"Error loading TOML file: {ex.Message}".ToLog(LogLevel.ERROR);
                 return null;
             }
         }
@@ -148,7 +148,7 @@ namespace LicensePlateChanger.Engine.Helpers
                 ConfigurationManager.ConfigurationData.VehicleClassOptions.TryGetValue(targetClass, out var classOptions) &&
                 classOptions.isEnabled)
             {
-                if (!Globals.vehicleLicensePlates.ContainsKey(vehicle.Handle))
+                if (!vehicleLicensePlates.ContainsKey(vehicle.Handle))
                 {
                     return classOptions;
                 }
@@ -181,7 +181,7 @@ namespace LicensePlateChanger.Engine.Helpers
                         {
                             int allowedVehicleHash = Function.Call<int>(Hash.GET_HASH_KEY, allowedVehicle.ToString());
 
-                            if (allowedVehicleHash == vehicle.Model.Hash && !Globals.vehicleLicensePlates.ContainsKey(vehicle.Handle))
+                            if (allowedVehicleHash == vehicle.Model.Hash && !vehicleLicensePlates.ContainsKey(vehicle.Handle))
                             {
                                 return vehicleTypeOption;
                             }

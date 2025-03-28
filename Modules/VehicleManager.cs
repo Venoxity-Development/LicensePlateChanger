@@ -11,13 +11,12 @@
         };
         #endregion
 
-        #region Constructors
+        #region Constructor
         public VehicleManager()
         {
             Decorators.Initialize();
 
             Tick += OnInit;
-
             Interval = 1000;
         }
         #endregion
@@ -45,12 +44,10 @@
                 case VehicleClassMappingValidationState.FailureNoMapping:
                 case VehicleClassMappingValidationState.FailureInvalidClassName:
                     Notification.Show("Failed: No mapping found for vehicle class or invalid class name.");
-                    "Failed to initialize VehicleManager script.".ToLog();
                     Abort();
                     break;
                 default:
                     Notification.Show("Unknown validation state encountered.");
-                    "Failed to initialize VehicleManager script.".ToLog();
                     Abort();
                     break;
             }
@@ -66,7 +63,7 @@
         {
             if (!processingStarted)
             {
-                "Vehicle processing started. Processing nearby vehicles...".ToLog();
+                // "Vehicle processing started. Processing nearby vehicles...".ToLog();
                 processingStarted = true; 
             }
 

@@ -86,7 +86,7 @@
                 return false;
             }
 
-            if (Globals.vehicleLicenseClassName.ContainsKey(vehicleID) && Globals.vehicleLicensePlates.ContainsKey(vehicleID))
+            if (vehicleLicenseClassName.ContainsKey(vehicleID) && vehicleLicensePlates.ContainsKey(vehicleID))
             {
                 return false;
             }

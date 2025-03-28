@@ -38,7 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>preview</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -48,7 +48,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>preview</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -68,6 +68,9 @@
     <Reference Include="Tomlyn, Version=0.17.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Tomlyn.0.17.0\lib\netstandard2.0\Tomlyn.dll</HintPath>
     </Reference>
+    <Reference Include="Venoxity.Common">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Grand Theft Auto V - Modded\scripts\Venoxity.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\Data\PlateSet.cs" />
@@ -75,6 +78,7 @@
     <Compile Include="Engine\Helpers\Extensions\VehicleExtensions.cs" />
     <Compile Include="Engine\InternalSystems\ConfigurationManager.cs" />
     <Compile Include="Globals.cs" />
+    <Compile Include="GlobalUsings.cs" />
     <Compile Include="Modules\VehicleManager.cs" />
     <Compile Include="Decorators.cs" />
     <Compile Include="Main.cs" />

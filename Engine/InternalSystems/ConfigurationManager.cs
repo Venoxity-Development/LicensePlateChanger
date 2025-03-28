@@ -12,7 +12,7 @@ namespace LicensePlateChanger.Engine.InternalSystems
 
         public static void LoadConfiguration()
         {
-            // "Loading configuration data...".ToLog();
+            Logger.Write("Attempting to load configuration data...", LogLevel.INFO);
 
             try
             {
@@ -20,27 +20,27 @@ namespace LicensePlateChanger.Engine.InternalSystems
 
                 if (ConfigurationData != null)
                 {
-                    // "Configuration data loaded successfully.".ToLog();
+                    Logger.Write("Configuration data successfully loaded.", LogLevel.INFO);
                     ValidationState = ValidateVehicleClassMapping();
                 }
                 else
                 {
-                    // "Failed to load configuration data.".ToLog(LogLevel.ERROR);
+                    Logger.Write("Failed to load configuration data. The file may be missing or corrupted.", LogLevel.ERROR);
                 }
             }
             catch (Exception ex)
             {
-               // $"Error loading configuration: {ex}".ToLog(LogLevel.ERROR);
+                Logger.Write($"Error while loading configuration: {ex.Message}", LogLevel.ERROR);
             }
         }
 
         private static VehicleClassMappingValidationState ValidateVehicleClassMapping()
         {
-            // "Validating vehicle class mapping...".ToLog();
+            Logger.Write("Validating vehicle class mapping...", LogLevel.INFO);
 
             if (ConfigurationData.VehicleClassOptions == null)
             {
-               // "No vehicle class mapping found.".ToLog(LogLevel.ERROR);
+                Logger.Write("No vehicle class mapping found in configuration.", LogLevel.ERROR);
                 return VehicleClassMappingValidationState.FailureNoMapping;
             }
 
@@ -66,12 +66,12 @@ namespace LicensePlateChanger.Engine.InternalSystems
                 }
                 else
                 {
-                   //  $"Invalid vehicle class name: {className}".ToLog(LogLevel.ERROR);
+                    Logger.Write($"Invalid vehicle class name: {className}.", LogLevel.ERROR);
                     return VehicleClassMappingValidationState.FailureInvalidClassName;
                 }
             }
 
-            // "Vehicle class mapping validation completed successfully.".ToLog();
+            Logger.Write("Vehicle class mapping validation completed successfully.", LogLevel.INFO);
             return VehicleClassMappingValidationState.Success;
         }
         #endregion
@@ -127,7 +127,15 @@ namespace LicensePlateChanger.Engine.InternalSystems
             var ini = new IniFile(path);
 
             EnableLogging = ini.Read("EnableLogging", "ADVANCED");
-           // $"Loaded EnableLogging setting: {EnableLogging}".ToLog(LogLevel.DEBUG);
+
+            if (!string.IsNullOrEmpty(EnableLogging))
+            {
+                Logger.Write($"Loaded EnableLogging setting: {EnableLogging}", LogLevel.INFO);
+            }
+            else
+            {
+                Logger.Write("EnableLogging setting not found or is empty. Using default value.", LogLevel.ERROR);
+            }
         }
 
         public static void LoadDefaultSettings()
@@ -139,12 +147,16 @@ namespace LicensePlateChanger.Engine.InternalSystems
                 try
                 {
                     File.Create(path).Close();
-                    // $"INI file created: {path}".ToLog();
+                    Logger.Write($"INI file created at {path}.", LogLevel.INFO);
                 }
                 catch (Exception ex)
                 {
-                    // $"Error creating INI file: {ex}".ToLog(LogLevel.ERROR);
+                    Logger.Write($"Error creating INI file at {path}: {ex.Message}", LogLevel.ERROR);
                 }
+            }
+            else
+            {
+                Logger.Write($"INI file already exists at {path}. No action taken.", LogLevel.INFO);
             }
         }
         #endregion

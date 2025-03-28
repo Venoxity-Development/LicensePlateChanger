@@ -11,17 +11,21 @@
         {
             if (_vehicleManager == null)
             {
-                Logger.Write("Initializing VehicleManager script...", LogLevel.INFO);
-                _vehicleManager = InstantiateScript<VehicleManager>();
+                Logger.Write("No existing VehicleManager found. Initializing a new instance...", LogLevel.INFO);
             }
             else
             {
-                Logger.Write("Existing VehicleManager detected. Aborting...", LogLevel.ERROR);
+                Logger.Write("Existing VehicleManager detected. Aborting and reinitializing...", LogLevel.ERROR);
                 _vehicleManager.Abort();
-                _vehicleManager = null;
-
                 Logger.Write("VehicleManager successfully aborted.", LogLevel.INFO);
             }
+
+            _vehicleManager = InstantiateScript<VehicleManager>();
+
+            if (_vehicleManager != null)
+                Logger.Write("VehicleManager successfully initialized.", LogLevel.INFO);
+            else
+                Logger.Write("Failed to initialize VehicleManager.", LogLevel.ERROR);
 
             Aborted += OnAborted;
             Interval = 1000;

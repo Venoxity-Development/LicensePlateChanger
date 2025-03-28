@@ -58,12 +58,11 @@
             Tick += OnTick;
             #endregion
         }
-
         private void OnTick(object sender, EventArgs e)
         {
             if (!processingStarted)
             {
-                // "Vehicle processing started. Processing nearby vehicles...".ToLog();
+                Logger.Write("Vehicle processing initiated. Scanning for nearby vehicles...", LogLevel.INFO);
                 processingStarted = true; 
             }
 

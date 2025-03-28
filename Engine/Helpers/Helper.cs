@@ -128,7 +128,7 @@ namespace LicensePlateChanger.Engine.Helpers
             }
             catch (Exception ex)
             {
-                // $"Error loading TOML file: {ex.Message}".ToLog(LogLevel.ERROR);
+                Logger.Write($"Error loading TOML file from {filePath}: {ex.Message}", LogLevel.ERROR);
                 return null;
             }
         }

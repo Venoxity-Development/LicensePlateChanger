@@ -10,6 +10,8 @@ namespace LicensePlateChanger.Engine.Helpers
         #region Fields
         internal static readonly Log Logger = new Log();
         private static readonly Random Random = new Random(Guid.NewGuid().GetHashCode());
+        internal static Dictionary<int, string> vehicleLicensePlates = new Dictionary<int, string>();
+        internal static Dictionary<int, int> vehicleLicenseClassName = new Dictionary<int, int>();
         #endregion
 
         #region Transformation

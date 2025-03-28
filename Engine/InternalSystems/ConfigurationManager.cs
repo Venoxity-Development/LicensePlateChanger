@@ -118,6 +118,8 @@ namespace LicensePlateChanger.Engine.InternalSystems
     {
         #region Properties
         public static string EnableLogging;
+        public static string MaxNearbyVehicles;
+        public static string VehicleScanRadius;
         #endregion
 
         #region Methods
@@ -127,15 +129,15 @@ namespace LicensePlateChanger.Engine.InternalSystems
             var ini = new IniFile(path);
 
             EnableLogging = ini.Read("EnableLogging", "ADVANCED");
+            MaxNearbyVehicles = ini.Read("MaxNearbyVehicles", "ADVANCED");
+            VehicleScanRadius = ini.Read("VehicleScanRadius", "ADVANCED");
 
-            if (!string.IsNullOrEmpty(EnableLogging))
-            {
-                Logger.Write($"Loaded EnableLogging setting: {EnableLogging}", LogLevel.INFO);
-            }
-            else
-            {
-                Logger.Write("EnableLogging setting not found or is empty. Using default value.", LogLevel.ERROR);
-            }
+            float scanRadius = float.TryParse(VehicleScanRadius, out float result) ? result : 100.0f;
+            int batchSize = int.TryParse(MaxNearbyVehicles, out int batchSizeResult) ? batchSizeResult : 10;
+
+            Logger.Write($"Loaded EnableLogging setting: {EnableLogging}", LogLevel.DEBUG);
+            Logger.Write($"Loaded MaxNearbyVehicles setting: {batchSize}", LogLevel.DEBUG);
+            Logger.Write($"Loaded VehicleScanRadius setting: {scanRadius}", LogLevel.DEBUG);
         }
 
         public static void LoadDefaultSettings()

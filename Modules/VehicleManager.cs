@@ -14,7 +14,20 @@
         #region Constructor
         public VehicleManager()
         {
-            Decorators.Initialize();
+            try
+            {
+                Decorators.Initialize();
+                Logger.Write("Decorator system initialized.", LogLevel.DEBUG);
+
+                foreach (var decorator in decorators)
+                {
+                    Logger.Write($"Registered decorator '{decorator.Key}' of type '{decorator.Value}'.", LogLevel.DEBUG);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Write($"An error occurred while initializing decorators: {ex.Message}", LogLevel.ERROR);
+            }
 
             Tick += OnInit;
             Interval = 1000;
@@ -73,9 +86,12 @@
         #region Methods
         private static void ProcessNearbyVehicles()
         {
-            Vehicle[] nearbyVehicles = ConfigurationHelper.GetFilteredVehicles(Game.Player.Character.Position, 100f);
-            int batchSize = 10; 
+            float scanRadius = float.TryParse(Engine.InternalSystems.Settings.VehicleScanRadius, out float result) ? result : 100.0f;
+            int batchSize = int.TryParse(Engine.InternalSystems.Settings.MaxNearbyVehicles, out int batchSizeResult) ? batchSizeResult : 10;
+
+            Vehicle[] nearbyVehicles = ConfigurationHelper.GetFilteredVehicles(Game.Player.Character.Position, scanRadius);
             int processedCount = 0;
+
             foreach (Vehicle vehicle in nearbyVehicles)
             {
                 if (processedCount % batchSize == 0 && processedCount != 0)
